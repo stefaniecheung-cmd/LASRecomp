@@ -15,6 +15,7 @@ extern "C" {
 }
 #include "option_rows.h"
 #include "osk.h"
+#include "localization.h"  // (ui_tr: every row label, value and description goes through it)
 
 static float g_scale = 1;
 static std::string g_desc_hover, g_desc_focus, g_desc_shown;  // this frame's hovered / selected row, and the last shown
@@ -81,8 +82,12 @@ void opt_begin(const char *id, float scale) {
 }
 
 void opt_section(const char *title) {
-    std::string t = title;
-    for (char &c : t) c = (char)toupper((unsigned char)c);
+    std::string t = ui_tr(title);
+    bool ascii = true;  // (a translated title keeps its case)
+    for (unsigned char c : t)
+        if (c >= 0x80) ascii = false;
+    if (ascii)
+        for (char &c : t) c = (char)toupper((unsigned char)c);
     if (ImGui::GetCursorPosY() > ImGui::GetStyle().WindowPadding.y + 1) ImGui::Dummy(ImVec2(0, 10 * g_scale));
     ImGui::TextColored(ImVec4(0.55f, 0.58f, 0.52f, 1), "%s", t.c_str());
 }
@@ -142,9 +147,10 @@ static int row(const char *label, const std::string &value, bool changed, const 
         for (ImGuiKey k : {ImGuiKey_GamepadDpadLeft, ImGuiKey_GamepadDpadRight, ImGuiKey_LeftArrow, ImGuiKey_RightArrow})
             ImGui::SetKeyOwner(k, ImGui::GetItemID());
     }
-    if (foc) g_desc_focus = desc ? desc : "";
-    if (hov) g_desc_hover = desc ? desc : "";
-    if (g_desc_first.empty() && desc) g_desc_first = desc;
+    const char *tv = value.empty() ? "" : ui_tr(value.c_str());  // (the value on the right, translated when known)
+    if (foc) g_desc_focus = desc ? ui_tr(desc) : "";
+    if (hov) g_desc_hover = desc ? ui_tr(desc) : "";
+    if (g_desc_first.empty() && desc) g_desc_first = ui_tr(desc);
 
     ImDrawList *dl = ImGui::GetWindowDrawList();
     float r = 9 * g_scale, pad = 16 * g_scale, fs = ImGui::GetFontSize();
@@ -152,8 +158,11 @@ static int row(const char *label, const std::string &value, bool changed, const 
     dl->AddRect(p, ImVec2(p.x + w, p.y + h), hov || foc ? (off ? IM_COL32(236, 194, 84, 120) : kGold)
                                              : mark ? IM_COL32(236, 194, 84, 130) : IM_COL32(255, 255, 255, off ? 18 : 38),
                 r, 0, hov || foc || mark ? 2.0f : 1.0f);
-    std::string t = label;
-    if (upper)
+    std::string t = ui_tr(label);
+    bool ascii = true;  // (Chinese has no upper case: leave translated labels as they are)
+    for (unsigned char c : t)
+        if (c >= 0x80) ascii = false;
+    if (upper && ascii)
         for (char &c : t) c = (char)toupper((unsigned char)c);
     float ty = p.y + (h - fs) * 0.5f;
     ImU32 label_col = off ? IM_COL32(110, 110, 102, 255) : IM_COL32(240, 236, 224, 255);  // (greyed out: clearly dim)
@@ -161,7 +170,7 @@ static int row(const char *label, const std::string &value, bool changed, const 
     float right = p.x + w - pad;  // (the value's right edge)
     if (arrows && !value.empty()) {  // ◀ value ▶, drawn (the fonts have no arrow glyphs); a click on one steps
         float aw = fs * 0.42f, gap = fs * 0.55f, cy = ty + fs * 0.52f;
-        float rx = right - aw, lx = rx - gap - ImGui::CalcTextSize(value.c_str()).x - gap - aw;
+        float rx = right - aw, lx = rx - gap - ImGui::CalcTextSize(tv).x - gap - aw;
         ImU32 ac = off ? IM_COL32(110, 110, 100, 255) : hov || foc ? kGold : IM_COL32(170, 170, 160, 255);
         dl->AddTriangleFilled(ImVec2(lx, cy), ImVec2(lx + aw, cy - aw * 0.75f), ImVec2(lx + aw, cy + aw * 0.75f), ac);
         dl->AddTriangleFilled(ImVec2(rx + aw, cy), ImVec2(rx, cy - aw * 0.75f), ImVec2(rx, cy + aw * 0.75f), ac);
@@ -181,9 +190,9 @@ static int row(const char *label, const std::string &value, bool changed, const 
         if (step == 1) step = 2;  // (Right opens it too)
     }
     if (!value.empty()) {
-        float vw = ImGui::CalcTextSize(value.c_str()).x, vx = right - vw;
+        float vw = ImGui::CalcTextSize(tv).x, vx = right - vw;
         dl->AddText(ImVec2(vx, ty), off ? IM_COL32(110, 110, 102, 255) : warn ? IM_COL32(240, 110, 90, 255)
-                                    : changed ? IM_COL32(255, 255, 255, 255) : IM_COL32(205, 205, 195, 255), value.c_str());
+                                    : changed ? IM_COL32(255, 255, 255, 255) : IM_COL32(205, 205, 195, 255), tv);
     }
     if (dup) ImGui::PopID();
     ImGui::PopID();
@@ -209,7 +218,7 @@ bool opt_choice(const char *label, int *v, const char *const *names, int n, int 
 
 bool opt_slider(const char *label, float *v, float lo, float hi, float step, float def, const char *fmt, const char *desc) {
     char buf[32];
-    snprintf(buf, sizeof buf, fmt, *v);
+    snprintf(buf, sizeof buf, ui_tr(fmt), *v);
     int s = row(label, buf, fabsf(*v - def) > step * 0.01f, desc, true, true);
     if (!s) return false;
     float eps = step * 0.01f, n = roundf(*v / step) * step + (s == 2 ? step : s * step);
@@ -221,8 +230,8 @@ bool opt_slider(const char *label, float *v, float lo, float hi, float step, flo
 bool opt_int(const char *label, int *v, int lo, int hi, int step, int def, const char *fmt, const char *desc,
              const char *lo_name) {
     char buf[48];
-    if (lo_name && *v == lo) snprintf(buf, sizeof buf, "%s", lo_name);
-    else snprintf(buf, sizeof buf, fmt, *v);
+    if (lo_name && *v == lo) snprintf(buf, sizeof buf, "%s", ui_tr(lo_name));
+    else snprintf(buf, sizeof buf, ui_tr(fmt), *v);
     int s = row(label, buf, *v != def, desc, true, true);
     if (!s) return false;
     int d = s == 2 ? step : s * step * (g_held && hi - lo > 40 * step ? 10 : 1);

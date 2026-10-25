@@ -14,6 +14,7 @@
 
 #include "imgui.h"
 #include "option_rows.h"
+#include "localization.h"
 #include "imgui_internal.h"  // (NavCursorVisible)
 #include "osk.h"
 #include "pad_nav.h"
@@ -354,6 +355,11 @@ static void init(void) {
     if (!g_font) g_font = io.Fonts->AddFontDefault();
     if (!g_font_big) g_font_big = g_font;
     if (!g_menu_font || !g_menu_font_big) g_menu_font = g_font, g_menu_font_big = g_font_big;
+    // Chinese: merge the game's own CJK glyphs (only the characters the translation table uses) into every face above
+    ui_merge_language_font(g_font);
+    ui_merge_language_font(g_font_big);
+    ui_merge_language_font(g_menu_font);
+    ui_merge_language_font(g_menu_font_big);
     style_init();
 #ifdef __APPLE__
     ImGui_ImplMetal_Init(dev);
@@ -624,7 +630,7 @@ static void keyboard_draw(ImGuiIO &io, float scale) {
     ImGui::Begin("##kbd", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings |
                                     ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::PushFont(g_font_big);
-    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "Enter your name");
+    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "%s", ui_tr("Enter your name"));
     ImGui::PopFont();
     static bool was_open, was_pad;
     bool pad = g_last_pad.load(), appearing = !was_open || pad != was_pad;  // (switching device: focus the new one)
@@ -638,7 +644,7 @@ static void keyboard_draw(ImGuiIO &io, float scale) {
                          [](ImGuiInputTextCallbackData *d) -> int { return d->EventChar < 0x20 ? 1 : 0; });
         ImGui::PopFont();
         if ((int)strlen(g_kbd_text) > g_kbd_max) g_kbd_text[g_kbd_max] = 0;
-        ImGui::TextDisabled("Enter  confirm      Esc  cancel      (%d / %d)", (int)strlen(g_kbd_text), g_kbd_max);
+        ImGui::TextDisabled(ui_tr("Enter  confirm      Esc  cancel      (%d / %d)"), (int)strlen(g_kbd_text), g_kbd_max);
     } else {  // controller: on-screen keyboard (osk.mm, shared with our menus' text fields)
         int r = osk_keys(g_kbd_text, sizeof g_kbd_text, g_kbd_max, appearing, scale, g_font_big);
         if (r) g_kbd = r > 0 ? 2 : 3;  // (Start / + confirms in menu_handle_event too)
@@ -780,7 +786,7 @@ static void tabs_body(float scale, bool in_game, void (*prelaunch)(float)) {
             const Tab &t = tabs[k];
             ImGuiTabItemFlags f = g_tab_request == t.id && t.on ? ImGuiTabItemFlags_SetSelected : 0;
             char lbl[64];
-            snprintf(lbl, sizeof lbl, prelaunch ? " %s " : "  %s  ", t.name);  // (ten tabs: tighter, so none is cut short)
+            snprintf(lbl, sizeof lbl, prelaunch ? " %s " : "  %s  ", ui_tr(t.name));  // (ten tabs: tighter, so none is cut short)
             ImGui::BeginDisabled(!t.on);  // (out of the game: Save Editor, Warp, Cheats)
             // focus (controller / keyboard): the tab lights up a little with a gold bar along its bottom, instead of
             // ImGui's outline (it sits 4 px outside the tab and the tab bar's clipping could cut its top off on macOS)
@@ -828,7 +834,7 @@ static void tabs_body(float scale, bool in_game, void (*prelaunch)(float)) {
                 case 1: tab_audio(); break;
                 case 2:
                     if (game_in_play()) save_editor_draw(scale);
-                    else ImGui::TextDisabled("Load a save file and get into the game to edit it.");
+                    else ImGui::TextDisabled("%s", ui_tr("Load a save file and get into the game to edit it."));
                     break;
                 case 3: rando_tab_draw(scale); break;
                 case 4: if (warp_tab_draw(scale)) set_open(false); break;
@@ -1006,7 +1012,7 @@ void menu_render(void *cmd, uint32_t target_w, uint32_t target_h) {
         // header as on the start screen's Settings: the title, and a close X in the corner (B / Esc too). ("Title
         // screen" - rt_request_reboot(RT_REBOOT_TITLE) - is to find a new home; user 2026-10-11.)
         ImGui::PushFont(g_font_big);
-        ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "Settings");
+        ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "%s", ui_tr("Settings"));
         ImGui::PopFont();
         {
             float bx = 44 * scale;
