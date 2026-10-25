@@ -24,6 +24,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"  // (SetKeyOwner)
 #include "option_rows.h"
+#include "localization.h"
 #include "osk.h"
 #include "pad_nav.h"
 #ifdef __APPLE__
@@ -1397,6 +1398,11 @@ extern "C" void launcher_run(const char *root) {
         g_font_title = io.Fonts->AddFontFromFileTTF(p, 92 * (b2 ? 2.3f : 1), NULL, ranges);
     }
     if (!g_font_menu) g_font_small = g_font_menu = g_font_title = io.Fonts->AddFontDefault();
+    // Chinese: the start screen's Settings page shares tabs_body() with the in-game menu, so its
+    // tabs and rows are translated too - they need the glyphs here as well.
+    ui_merge_language_font(g_font_small);
+    ui_merge_language_font(g_font_menu);
+    ui_merge_language_font(g_font_title);
     ImGuiStyle &st = ImGui::GetStyle();
     st.Colors[ImGuiCol_Header] = ImVec4(0, 0, 0, 0);
     st.Colors[ImGuiCol_HeaderHovered] = ImVec4(1, 1, 1, 0.08f);
