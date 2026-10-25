@@ -1,0 +1,85 @@
+# Personal build: the Windows exe only.
+#
+# The upstream release workflow (release.yml) builds four platforms and packs the
+# generator helpers and a slimmed zig into a 99 MB zip. This branch changes only
+# runtime/ui/ (the Chinese menu), so none of that is needed: build the exe and
+# upload it on its own (about 6 MB, instead of 99 MB).
+#
+# The exe it produces is the same build as the release's: RELEASE=1, same defines,
+# same LGPL FFmpeg. Only runtime/ui/ differs from upstream.
+name: zh build (Windows exe)
+
+on:
+  push:
+    branches: [zh]
+    paths:
+      - 'runtime/ui/**'
+      - '.github/workflows/zh-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zh-build
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: LF line endings, as tools/setup_windows.ps1 sets for clones
+        shell: pwsh
+        run: git config --global core.autocrlf false
+
+      - uses: actions/checkout@v4
+
+      # MSYS2 UCRT64 as tools/setup_windows.ps1 sets it up (minus the debugger /
+      # validation layers; no FFmpeg: the release links make deps-windows' LGPL one)
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: make git curl tar xz diffutils zip unzip
+          pacboy: clang:p lld:p binutils:p sdl3:p vulkan-devel:p shaderc:p spirv-tools:p pkgconf:p
+            vulkan-memory-allocator:p nasm:p
+
+      - name: Deps cache
+        id: deps
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            build/deps-win
+            !build/deps-win/src
+          key: deps-${{ runner.os }}-${{ hashFiles('tools/build_deps_windows.sh') }}
+
+      - name: Deps (LGPL FFmpeg)
+        run: make deps-windows
+
+      - uses: actions/cache/save@v4
+        if: steps.deps.outputs.cache-hit != 'true'
+        with:
+          path: |
+            build/deps-win
+            !build/deps-win/src
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+
+      # the line make's dist target runs, without the helpers, zig or the package
+      - name: Build lasrecomp.exe
+        run: make -j"$(nproc)" B=build/win-release DEPS="$(pwd)/build/deps-win" RELEASE=1 build/win-release/lasrecomp.exe
+
+      - name: No game code inside
+        run: |
+          if nm build/win-release/lasrecomp.exe | grep -q ' f_70'; then
+            echo "::error::the exe holds game code"; exit 1
+          fi
+          ls -la build/win-release/lasrecomp.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lasrecomp-exe-zh
+          path: build/win-release/lasrecomp.exe
+          if-no-files-found: error
