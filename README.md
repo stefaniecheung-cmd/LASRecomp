@@ -1,6 +1,6 @@
-# LAS Recomp Beta 5 — 中文界面版
+# LAS Recomp Beta 5.3 — 中文界面版
 
-> 个人自用的 **Windows** 构建：官方 Beta 5 加中文界面。
+> 个人自用的 **Windows** 构建：官方 Beta 5.3 加中文界面。
 > 不含任何游戏文件、密钥或转储工具——那些需要你自己的正版备份。
 
 这个仓库是 [peiikai/LASRecomp](https://github.com/peiikai/LASRecomp) 的 fork，只做了一件事：
@@ -9,11 +9,23 @@
 界面翻译移植自 [hjqcan/LASRecomp](https://github.com/hjqcan/LASRecomp) 的 Multi 分支（MIT），
 再补上官方 Beta 5 自己的界面文字。
 
+## 这一版跟上游的对应关系
+
+基于官方 **Beta 5.3**（2026-10-26），包含 Beta 5 之后的三个热修：
+
+| 版本 | 内容 |
+|---|---|
+| Beta 5.1 | Shellsanity 出道具崩溃（#349） |
+| Beta 5.2 | 老 Intel 核显黑屏、Mali 崩溃、随机化水下道具、含重音/日文字符的名字选档崩溃 |
+| Beta 5.3 | 游戏文件缺失/损坏检测、CFG 导致安装卡 10%、BowWow 在房屋内显示错乱、Steam Deck 60fps、存档编辑器「给予任意道具」 |
+
+Beta 5.3 还给 release 构建加了 `--strip-debug`，所以 exe 从 16.3 MB 缩到 **4.0 MB**，功能不变。
+
 ---
 
 ## 下载与安装
 
-到 [Releases](https://github.com/xinghee/LASRecomp/releases) 下载 `lasrecomp-zh-*.zip`（约 5 MB）。
+到 [Releases](https://github.com/xinghee/LASRecomp/releases) 下载 `lasrecomp-zh-*.zip`（约 1.6 MB，内含 4 MB 的 exe）。
 
 ```
 1. 解压，得到 lasrecomp.exe
@@ -105,7 +117,7 @@ checkout → MSYS2 (UCRT64) → make deps-windows（有缓存）
 | 平台 | 4 个 | **仅 Windows** |
 | 内容 | exe + 生成器 + zig + 打 zip | **只出 exe** |
 | 耗时 | 约 13 分钟 | **约 5 分钟** |
-| 产物 | 98.8 MB | **5 MB** |
+| 产物 | 98.8 MB | **约 1.6 MB**（strip 之后的 exe） |
 
 本地想编也行，按上游的 [`docs/BUILD-windows.md`](docs/BUILD-windows.md) 装好 MSYS2 后：
 

@@ -1,0 +1,503 @@
+ (kept there)
+ L2
+ \"include-blue-rupees\": %s,\n
+ \xe2\x80\xba
+ \xe2\x86\x92
+ \xe2\x96\xb8
+ font file(s) imported
+ not recognized
+ shuffle
+ small keys
+ window through your desktop's file chooser 
+!  %s
+'s soul
+(nintendo_udsg-r_org_zh-cn_003, nintendo_udsg-r_ext_zh-cn_003, nintendo_udjxh-db_zh-tw_003, 
+(xdg-desktop-portal) or zenity. Install either one, then try again.
++ connectors
+-fsSL
+. Used from the next game start.
+.\n
+75%% / 50%% / 25%%: a share of the display, for slower machines.\n\nRendering at 
+999 rupees, all 50 Secret Seashells and 5 Golden Leaves.\n\n
+A Manbo's Mambo arrival point: can't be warped to directly.
+A filter over the whole picture, the HUD included.
+A run timer in the corner: real time from the start of gameplay to the ending.
+A seed ID holds the random seed and every option below: the same ID on the same LAS Recomp 
+A seed named \"
+Accept: application/vnd.github+json
+All game files (about %.0f GB) will be uploaded to your OneDrive.
+Also in houses, caves and dungeons. Off: normal speed there.
+Angler's Tunnel
+Animal Village
+Any color: pick its hue, saturation and brightness.
+Any hit defeats Link, whatever his hearts.
+Apple
+Arrow upgrade
+Avalaunch, Rolling Bones, Cue Ball, Blaino, Master Stalfos, Moblin Chief, Lanmola, the Ball-and-Chain 
+Awakening for Nintendo Switch. The game isn't included with LAS Recomp.
+Back to the list
+Beta 
+Beta 2
+Beta 5.1
+Beta 6
+Beta 6.1
+Beta <n>
+Beta <n>.<m>
+Blue Tunic
+Bomb upgrade
+Bombs, arrows and Magic Powder stay full.\n\nOnly for the bags Link already owns.
+Boss
+Boss soul: found
+Boss soul: needed
+Bosses
+Bottle
+Bottle Grotto
+BowWow, the Rooster and the others follow Link into dungeons; the logic counts what they can do there.
+Build cache
+Build cache cleared.
+Bush
+Bush, Mabe Village (north)
+Bushes
+C:\\Windows
+Cancelling...
+Carry up to 40 Magic Powder instead of 20.
+Catfish's Maw
+Cemetery
+Chest
+Chests
+Choose the buttons and keys for the game. The menu always opens with F1, Esc, 
+Choose the folder that has the game's exefs and romfs folders in it.
+Choose this one
+Choose...
+Clear build cache
+Clothes Blue
+Clothes Green
+Clothes Red
+Collect Triforce pieces: the last one needed rolls the credits. The Wind Fish isn't needed.
+Color Dungeon
+Compass
+Compilation cancelled. Completed files are kept.
+Controllers keep working while another window is in front. macOS may ask for Input Monitoring 
+Copies the game files LAS Recomp needs and recompiles the game from them. This only 
+Copies the seed ID above, to share the seed.
+Copy your game files again, then choose that folder and set them up again.
+Copying the game files...
+Could not clear the build cache.
+Could not delete the game files (not in LAS Recomp's data folder?).
+Could not start the seed generator (rando-gen missing?)
+Couldn't delete the game files
+Couldn't open a file window. 
+Couldn't open a folder window
+Create + Options
+DOWNLOAD 
+Dampe's Chamber Dungeon challenge rewards hold items from the pool.
+Data folder
+Defeating enemies in a row never drops a Guardian Acorn or a Piece of Power.
+Defeating enemies in a row never drops a Guardian Acorn or a Piece of Power. Randomizer seeds 
+Delete the game files?
+Deletes the extracted game files now.
+Dev checkout: this is %s
+Digs
+Documents
+Drives LiveSplit through its Server component: the start, a split for each instrument and the 
+Dungeon 9). Any: the dungeon Link is in.
+Dungeon Map
+Dungeon entrances lead into other dungeons.
+Dungeon keys (and with the last choice every dungeon item) can be anywhere in the world, with logic. A 
+Each area gets another area's lighting and atmosphere (cosmetic).
+Each dungeon boss (and the Color Dungeon's) has a soul hidden among the items. Until you find it the boss 
+Each kind of dungeon mini-boss has a soul hidden among the items; one soul counts for every fight with 
+Each kind of enemy in another color. Enemies whose color shows their strength or type keep theirs.
+Each of the 5 crane prize spots holds a check; won spots then hold ordinary prizes.
+Eagle's Tower
+Every bush on the island hides an item from the pool (about 310 more checks; bushes over a hole and tall 
+Every good in the Mabe Village shop is a check: the shield, hearts, shovel, bombs, chamber stone and 
+Every heart, item, upgrade, song, instrument and dungeon key, full ammo, 
+Every hidden Secret Seashell spot holds an item from the pool.
+Every liftable pot in houses, caves and dungeons hides an item from the pool (about 400 more checks). 
+Everything
+Everything on this page back to the game's own look.
+Experimental. Rebuilds the dungeons (all but Eagle's Tower) from shuffled rooms; boss, mini-boss, 
+Face Shrine
+Fairy
+Fairy in a bottle
+Feather
+Fills the screen. Also: F11, Alt+Enter or Cmd+Ctrl+F.
+Filter: 
+Filters
+Fonts aren't included. For the original look, import your own copies of 
+Frees the space LAS Recomp's copy of the game files takes. 
+Game code not built yet
+Game files
+Game files damaged or changed
+Game files deleted.
+Game files folder
+Game files incomplete
+Game font
+Game map
+Gives all 9 Heart Containers and 32 Pieces of Heart (20 hearts), then refills them.\n\n
+Golden Leaf
+Goponga Swamp
+Green Apple
+Guardian Acorn
+Health refills to full whenever Link is hurt.
+Heart
+Heart Container
+Heart Containers (one heart each), from the dungeon bosses.\n\n
+Heart Piece
+Heart piece
+Heart pieces
+Hide checked
+Hides the Hero Mode emblem in the corner of the screen while playing a Hero Mode file.
+Home or Back + Start, so no binding can lock you out.
+How fast Link walks. The Pegasus Boots and swimming are unchanged.
+How much damage Link takes from every hit: half, the game's own, or up to eight times as much.
+How often overworld enemies become mini-bosses. All: every one with room for one.
+How the image is scaled up to the window when it renders at a lower resolution. AMD FSR 1: 
+How the image is scaled up to the window when it renders at a lower resolution. MetalFX: Apple's 
+INSANE: every diggable tile on the overworld is a check - about 5,000 more, and most important items end 
+If it keeps happening, report it on GitHub.
+If you changed Control flow guard in Exploit protection, set it back to the default and try again. 
+Imported fonts removed: the substitute fonts are used.
+In logic now
+In this seed companions are items: owning one lets it follow Link.
+Kanalet Castle
+Keeps the game files.
+Key Cavern
+Koholint Prairie
+LARECOMP_CHEATS
+LARECOMP_CONTROLS_SUB
+LARECOMP_DAMAGE
+LARECOMP_FIELD_FOCUS
+LARECOMP_FIND_FLAGS
+LARECOMP_LAUNCHER_AUTOPLAY
+LARECOMP_LAUNCHER_DATA_PICK
+LARECOMP_LAUNCHER_DELETE
+LARECOMP_LAUNCHER_EXTRACT
+LARECOMP_LAUNCHER_FONT
+LARECOMP_LAUNCHER_PLAY_AT
+LARECOMP_LAUNCHER_PREPARE
+LARECOMP_LAUNCHER_SETUP
+LARECOMP_LAUNCHER_SHOT
+LARECOMP_LAUNCHER_SKIP_AT
+LARECOMP_LOG_FLAGS
+LARECOMP_LOG_TRACKER
+LARECOMP_MENU_FOCUS_LOG
+LARECOMP_MENU_FONT
+LARECOMP_MENU_SCROLL
+LARECOMP_MENU_TAB
+LARECOMP_NO_UPDATE_CHECK
+LARECOMP_OPEN_PICKER
+LARECOMP_OPT_SCROLL
+LARECOMP_OVERLAY_CACHE
+LARECOMP_PAD_TYPE
+LARECOMP_POKE_SAVE
+LARECOMP_RANDO_GEN
+LARECOMP_RANDO_GEN_SHOTS
+LARECOMP_RANDO_GEN_TEST
+LARECOMP_RANDO_ID
+LARECOMP_SAVE_DUMP_AT
+LARECOMP_SAVE_MAX_AT
+LARECOMP_SET_FLAGS
+LARECOMP_SHOT_PATH
+LARECOMP_SPOILER_TEST
+LARECOMP_TEST_ONEDRIVE
+LARECOMP_TRACKER_CYCLE
+LARECOMP_TRI_RIGHT
+LARECOMP_UPDATE_TAGS
+LARECOMP_WARP_MENU_PICK
+LARECOMP_WATCH_SAVE
+LAS Recomp needs the game's own files (the exefs and romfs folders), not .xci / .nsp / .nca files.
+LAS Recomp opens the 
+LAS Recompiled
+LASRecomp/
+L_Operation_00
+Leaves this seed and plays the game without the randomizer. 
+Letter
+Lifts pots and rocks. Level 2 lifts the heavy ones.
+Link arrives here swimming: needs the Flippers.
+Link starts with the Ocarina and Manbo's Mambo, ready to warp. Off: both are placed in the world, 
+Link starts with the shield. Off: it's placed in the world, with logic.
+Link starts with the sword. Off: it's placed in the world, with logic.
+Link takes, the red one always strengthens his attacks, and with both he has both.
+Link walks in the exact direction of the stick instead of snapping to 8 directions.
+Link's current health, in quarter hearts.
+Link's shield. The Mirror Shield blocks beams and fire.
+Link's sword. Level 2 is the Noble Sword from the Seashell Mansion.
+Link's tunic color. Default: the game's own (or the randomizer seed's).
+Loaded: the options are set from this ID.
+Looking for the game files...
+Mabe Village
+Mabe Village's paths are open from the start.
+Magic Powder upgrade
+Make one with the options under New seed, then Generate seed.
+Makes a seed with these options. It shows up under Seeds, ready to play.
+Maps, compasses and stone beaks: shuffled into the item pool, or given at the start.
+Marin is an item in the pool, and the desert stays closed until you find her.
+Martha's Bay
+Matching letters (A-A, B-B...) on the dungeon map show which doorways connect: a pair appears once 
+Minus + Plus
+Moldorm's soul
+More pieces than needed are hidden, so you can skip some.
+Move your saves, seeds, settings and game files (%.1f GB) there, or start fresh?
+Moving your data
+Mt. Tamaranch
+Mysterious Forest
+Mysterious Woods
+N_MapCore
+Nightmare Key
+Nightmare Key: found
+Nightmare Key: not found
+Nintendo
+Nintendo Switch  \xc2\xb7  v%s
+Nintendo font (imported)
+No game files yet
+No readable spoiler for this seed yet. Generate it with: tools/rando/spoiler_view.py rando/%s
+No, wait
+Not enough free space there to move them (%.1f GB free).
+Off: the shopkeeper never lets you steal.
+On: this randomizer seed was made with Hookshot Anything, and its logic counts on it.
+On: this randomizer seed was made with it.
+Open
+Open it in game with F1 or Esc, or on a controller with the %s (or %s together).
+Panel Dungeon Piece
+Panel Dungeon Piece Set
+Panel Dungeon Plus Chip
+Piece of Power
+Pieces of Heart: every 4 make a heart.\n\nThe hearts on the HUD update after the next screen change.
+PlayStation
+Pothole Field
+Pots
+Power Bracelet level 2
+Preparing shaders
+Press
+Puts every controller button back to its default.
+Rando: <seed>
+Rapids Ride
+Recompiling the game
+Red Tunic
+Refills health, and the bombs, arrows and Magic Powder Link owns.
+Removes the saved game-code build files. The next setup compiles 
+Resume game code
+Room B5
+Room shuffle
+Room shuffle: 
+Rooster
+Rupee (1)
+Rupees (100)
+Rupees (20)
+Rupees (300)
+Rupees (5)
+Rupees (50)
+Rupees in Link's wallet (up to 999).\n\nHold left / right to go faster.
+SET UP GAME FILES
+Saves, seeds and settings are kept, and your own game files aren't touched: you can 
+Seashell
+Seashells
+Secret Medicine: revives Link once when his health runs out.
+Seed \"
+Selected
+Set up
+Set up game files
+Set up the game files to build it (a few minutes, only once).
+Set up the game files to play.
+Sets the leaves, grass and sand colors below.
+Setting up the game files
+Setting up the game files...
+Shaders will compile as you play, but you may experience some pop-in.
+Shop
+Shops
+Shows the frame rate in the top right corner.
+Shuffles where entrances lead, with logic.
+Single-entrance interiors and connector caves (two or three doors) are shuffled. Marin & Tarin's 
+Skip
+Skipping...
+Sleepy Mushroom
+Small Key
+Smooths jagged edges of the game image before it is scaled to the window. SMAA: finds the edges and 
+Soldier or Shadow Link. Shadow Link, Blaino and the Soldier also appear in dungeons and caves.
+Some of the game's files are missing - usually a copy or unzip that stopped partway. Copy the game files 
+Some of the game's files are missing, usually from a copy or unzip that stopped partway. Copy your game 
+Some overworld enemies become mini-bosses: Hinox, Armos Knight, Dodongo Snake, Giant Buzz Blob, Smasher, 
+Souls
+Sound in the game's movies (the opening and the ending). Applies the next time a movie starts.
+Southern Face Shrine
+Stone Beak
+Storage
+Story events may expect a specific companion.
+Switch fonts
+Sword level 2
+SystemRoot
+Tabahl Wasteland
+Tail Cave
+Tal Tal Heights
+Tal Tal Mountain Range
+Test build 
+Test build <name>
+The Color Dungeon's blupees hold items from the pool.
+The Flying Rooster is an item: found, he follows you. The logic counts him wherever he can stand in for 
+The Ghost is an item: found, walk him to his grave for its check. He no longer appears by himself after 
+The Hookshot latches onto any wall or object it hits, not only hookshot targets. The logic counts the 
+The Ocarina. Songs are under Ocarina songs.
+The Rapids Ride race's prizes hold items from the pool.
+The Seashell Sensor: chimes near hidden Secret Seashells.
+The Siren Instruments are items in the pool instead of each dungeon's reward.
+The beaches, the desert and the sandy south.
+The button icons the game shows. Auto: the connected controller's.
+The d-pad moves Link like the control stick.
+The fishing pond's prizes hold items from the pool.
+The folder with your own extracted game files (exefs/romfs) of The Legend of Zelda: Link's 
+The game's echo in caves, dungeons and big rooms.
+The game's text language, as its own system setting. Applies when the game restarts.
+The game's volume. 100% is the game's own level; above it, louder.
+The hearts on the HUD update after the next screen change.
+The hookshot latches onto any wall or object, not only its targets. Randomizer seeds made 
+The item to give, through the game's own pickup.
+The overworld map marks the checks you have and haven't done yet.
+The red and blue tunics add up instead of replacing each other: the blue one always halves the damage 
+The seed gets its own colors and season. Your choices in the Cosmetics tab still win.
+The seed's name (its folder). Leave it empty for a random one.
+The spoiler log stays shut until the credits, and the title screen shows a seed hash to compare.
+The tool that builds the game code was stopped by Windows security settings (Control Flow Guard). 
+The trade quest characters' gifts hold items from the pool.
+The tunics from the Color Dungeon: red doubles Link's attack, blue 
+They aren't in LAS Recomp's data folder, 
+This deletes LAS Recomp's copy of the game files (%.1f GB).
+Title screen
+Toggle
+Toronbo Shores
+Tracker
+TradeBananasGet
+TradeBroomGet
+TradeDogFoodGet
+TradeFishingHookGet
+TradeHibiscusGet
+TradeHoneycombGet
+TradeLetterGet
+TradeMermaidsScaleGet
+TradeNecklaceGet
+TradePineappleGet
+TradeRibbonGet
+TradeStickGet
+TradeYoshiDollGet
+Turns off the tilt-shift blur at the top and bottom of the screen.
+Turtle Rock
+UVWXYZ-.'!
+Ukuku Prairie
+Unchecked pots are golden: lift, smash or throw one to reveal its item.
+Unlocked: the view fills the window, so wider (or taller) windows show more of the island - up to 
+Up / Down  choose      A  show on map      B  back
+Up / Down  choose      A  show room      B  back
+Update available!  
+Updating the game
+Upgrades the bomb bag and quiver to 60 and Magic Powder to 40, then fills 
+Vanilla
+Version 
+Version 1.0.0
+View + Menu
+W_Cursor_00
+Warp_
+Where LAS Recomp keeps game files, saves, seeds and settings.\n\n
+Which button confirms in LAS Recomp's menus.
+Which of the Seashell Mansion's rewards can hold important items: up to how many seashells.
+Which one, for items with several: Pieces of Heart, Secret Seashells, Golden Leaves etc. each have 
+Who follows Link. They join at the next screen change.\n\n
+With Houses & caves: leaving a house puts you outside a different door than the one you came in by.
+Working...
+Writes where every item is, to read from the seed's Spoiler log.
+Xbox
+Yarna Desert
+Yes, delete them
+Yes, skip
+You can steal from the shop before you have the sword.
+You must find your bomb bag to collect and carry bombs.
+You must find your powder bag to collect and carry Magic Powder.
+Your copy of the game
+Your data is still in %s
+[heavy]
+[menu] focus check ... OK / FAIL
+[pit]
+\\System32\\curl.exe
+\nLogic: 
+\nRace mode. Seed hash: 
+\n\n
+\n\nChosen: 
+\n\nConnected.
+\n\nNot connected.
+\n\nPlay it, read its spoiler log, copy its ID to share, rename or delete it. Each seed has its 
+\n\nProgress since your last save is lost.
+\nerror 
+\nstage 
+\x01
+\x02
+\xe2\x80\xb9
+\xe2\x80\xba
+a popup is open
+a seed ID has 30 characters
+a small key
+again so none are missing, then choose the folder again.
+an index.\n\nFor Small Keys, Nightmare Keys, maps, compasses and Stone Beaks: the dungeon (1-8, Color 
+are you sure?
+as sharp as your GPU keeps at full speed. 1x-4x: the Switch's 1080p times that%s. 
+beta_%d%c
+beta_%d.%d%c
+beta_2,v1.0.0
+bfttf;ttf
+blends only along them, so textures stay sharp. Most useful at a lower internal resolution.
+dug, so you can see where you've been.
+dungeons only
+edge-aware upscaling and sharpening, sharper. Bilinear: plain and soft.
+ending, and game time without loading.
+everything again.
+file://
+files again, then choose that folder and set them up again.
+first Down
+game files\n
+gaps this crosses. Seeds made with it always have Hookshot Anything on.
+going back through a door takes you back. Decoupled: it takes you somewhere else.
+grass stay as they are). Unchecked bushes are golden: cut one to reveal its item.
+halves the damage he takes.
+house and water entrances stay vanilla.
+https://api.github.com/repos/peiikai/LASRecomp/releases?per_page=100
+https://github.com/peiikai/LASRecomp/releases/tag/
+in logic
+isn't in its lair: the way on to the instrument stays shut until the boss is beaten. Found souls show 
+key always opens doors in the dungeon it belongs to; with keysanity the Items screen shows each dungeon's keys.
+keys+nk
+leads to A
+localhost:16834
+made by another LAS Recomp version (ID format 
+made with this option always have it on.
+needs 
+needs 2 small keys, Nightmare Key
+needs X
+needs to be done once and may take a while. Your own files aren't changed.
+nintendo_udsg-r_ko_003) and nintendo_ext_003.bfttf (button icons). 
+nintendo_udsg-r_std_003.bfttf (text), the same-named files for Chinese and Korean 
+not yet
+on the Items screen.
+one row per item
+out of logic
+own save files.
+piece of heart. Buy it, or steal it (the shopkeeper remembers a thief).
+set the game files up again from them.
+so they were left alone.
+stairs and other key rooms stay put. Any doorway can lead to any doorway of its dungeon. Coupled: 
+substitute (this OS's, per language)
+that kind. Until you find it the mini-boss doesn't show up and its room's way on stays shut.
+the Surf Harp.
+the feather or hookshot.
+the tab bar
+them (for the bags Link owns).
+third_party/LAS-Randomizer/
+trick logic
+unzip that stopped partway. Copy the game files again so none are missing, then choose the folder 
+up buried. The first dig of a tile brings its item up; grass and bushes have to be cut first. Holes stay 
+upscaler, sharper. Bilinear: plain and soft.
+uvwxyz-.'!
+v%d.%d.%d%c
+version makes the same seed. Enter a shared ID here to load its options.
+with Hookshot Anything always have it on.
+with logic.
+x[pit]
+you've been through either end, and every pair of the dungeon once you have its map.
