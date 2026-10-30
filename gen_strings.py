@@ -1,60 +1,59 @@
 # -*- coding: utf-8 -*-
-"""把所有待翻译条目写成 UI_TEXT 行，追加到 localization_strings.h"""
-import re, os, sys, json
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from opencc import OpenCC
-from translations_92 import TRANS
-from names_dict import NAMES
-from remaining_ui_zh import TRANS as UI_SECONDARY
+"""从 zh_table.py 生成 localization_strings.h 的「补充翻译」区块。
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-HDR = os.path.join(ROOT, "runtime/ui/localization_strings.h")
-cc = OpenCC("s2twp")
+旧版（gen_strings_legacy.py）的两个坑，这里都堵住了：
+  * 数据源按英文原文做键，不做「列表下标对齐」——下标一旦错位，整段译文会串行（#23 就是这么错的）。
+  * 生成是「整块覆盖」，不是「只追加缺少的键」；改了译文重跑即可生效，不会留下旧版本。
 
-def cstr(s):
+用法：
+  python gen_strings.py            # 重写区块
+  python gen_strings.py --check    # 只比对，不写盘
+"""
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from zh_table import TABLE  # noqa: E402
+
+HDR = os.path.join(HERE, "runtime/ui/localization_strings.h")
+MARKER = "// ---- 以下为补充翻译（右栏说明、传送点、道具名、追踪器、开始界面），由社区补全 ----"
+
+
+def cstr(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n") + '"'
 
-# 已有 key（按 C 语义还原转义后比较）
-src = open(HDR, encoding="utf-8").read()
-lit = r'"(?:[^"\\]|\\.)*"'
-run = r'%s(?:\s*%s)*' % (lit, lit)
-def unesc(t):
-    return t.encode().decode("unicode_escape")
 
-existing = set()
-for m in re.finditer(r'UI_TEXT\(\s*(%s)\s*,\s*(%s)\s*,\s*(%s)\)' % (run, run, run), src):
-    parts = re.findall(r'"((?:[^"\\]|\\.)*)"', m.group(1))
-    existing.add(unesc("".join(parts)))
+def render_block() -> str:
+    lines = [MARKER]
+    for en, (zh, tw) in TABLE.items():
+        lines.append("UI_TEXT(%s, %s, %s)" % (cstr(en), cstr(zh), cstr(tw)))
+    return "\n".join(lines) + "\n"
 
-# 1) 92 条说明文字（#23 改为“你的游戏文件”）
-desc = json.load(open(os.path.join(os.path.dirname(ROOT), "missing_desc.json"), encoding="utf-8"))
-keys = list(desc.keys())
-assert len(keys) == len(TRANS)
-# 抽取时保留的是转义文本（\\n 等），这里还原成真实字符再重新转义
-pairs = { k.encode('utf-8').decode('unicode_escape'): v for k, v in zip(keys, TRANS) }
 
-# 2) 传送点区域名与标签
-warp = json.load(open(os.path.join(os.path.dirname(ROOT), "warp_zh.json"), encoding="utf-8"))
-pairs.update(warp["areas"])
-pairs.update(warp["labels"])
+def main() -> int:
+    src = open(HDR, encoding="utf-8").read()
+    if MARKER not in src:
+        print("错误：找不到补充翻译区块的标记行")
+        return 2
+    head = src[: src.index(MARKER)]
+    new = head + render_block()
 
-# 3) 道具名 / 追踪器 / 开始界面
-pairs.update(NAMES)
+    if "--check" in sys.argv:
+        if new == src:
+            print("OK：%d 条，与 zh_table.py 一致" % len(TABLE))
+            return 0
+        a, b = src.splitlines(), new.splitlines()
+        diff = [(i + 1, x, y) for i, (x, y) in enumerate(zip(a, b)) if x != y]
+        print("不一致：%d 行不同（文件 %d 行 / 生成 %d 行）" % (len(diff), len(a), len(b)))
+        for i, x, y in diff[:10]:
+            print("  行%d\n    文件: %s\n    生成: %s" % (i, x[:120], y[:120]))
+        return 1
 
-# 4) 二级界面：软键盘、随机化、剧透、存档编辑、作弊、按键、宠物、弹窗、追踪器图例
-pairs.update(UI_SECONDARY)
+    open(HDR, "w", encoding="utf-8", newline="\n").write(new)
+    print("已写入：%d 条" % len(TABLE))
+    return 0
 
-# 过滤：已有 key 跳过；空白翻译跳过
-final = {k: v for k, v in pairs.items() if k not in existing and v.strip()}
-lines = [
-    "",
-    "// ---- 以下为补充翻译（右栏说明、传送点、道具名、追踪器、开始界面），由社区补全 ----",
-]
-for k in sorted(final):
-    lines.append("UI_TEXT(%s, %s, %s)" % (cstr(k), cstr(final[k]), cstr(cc.convert(final[k]))))
 
-open(HDR, "a", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
-print("新增条目:", len(final), " 跳过(已存在):", len(pairs) - len(final))
-print("总计:", len(existing) + len(final))
-json.dump(final, open(os.path.join(os.path.dirname(ROOT), "added_entries.json"), "w", encoding="utf-8"),
-          ensure_ascii=False, indent=1)
+if __name__ == "__main__":
+    raise SystemExit(main())
