@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr: the tab's lines, the group buttons and every warp label)
 #include "osk.h"
 #include "warp_data.h"
 
@@ -56,19 +57,19 @@ static bool spot(const WarpSpot &w, bool show_area, bool enabled) {
     bool swim = warp_blocked(w.locator);
     enabled = enabled && !swim;
     char lbl[256];
-    if (show_area) snprintf(lbl, sizeof lbl, "%s  -  %s##%s/%s", w.area, w.label, w.level, w.locator);
-    else snprintf(lbl, sizeof lbl, "%s##%s/%s", w.label, w.level, w.locator);
+    if (show_area) snprintf(lbl, sizeof lbl, "%s  -  %s##%s/%s", ui_tr(w.area), ui_tr(w.label), w.level, w.locator);
+    else snprintf(lbl, sizeof lbl, "%s##%s/%s", ui_tr(w.label), w.level, w.locator);
     ImGui::BeginDisabled(!enabled);
     bool go = ImGui::Selectable(lbl);
     ImGui::EndDisabled();
-    if (swim && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) ImGui::SetTooltip(strncmp(w.locator, "Warp_", 5) ? "Link arrives here swimming: needs the Flippers." : "A Manbo's Mambo arrival point: can't be warped to directly.");
+    if (swim && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) ImGui::SetTooltip(ui_tr(strncmp(w.locator, "Warp_", 5) ? "Link arrives here swimming: needs the Flippers." : "A Manbo's Mambo arrival point: can't be warped to directly."));
     if (ImGui::IsItemHovered() || ImGui::IsItemFocused()) {
         ImGui::SameLine(ImGui::GetContentRegionAvail().x * 0.70f + ImGui::GetCursorStartPos().x);
         ImGui::TextDisabled("%s / %s", w.level, w.locator);
     }
     if (go) {
         warp_request(w.level, w.locator);
-        snprintf(g_last, sizeof g_last, "%s  -  %s", w.area, w.label);
+        snprintf(g_last, sizeof g_last, "%s  -  %s", ui_tr(w.area), ui_tr(w.label));
     }
     return go;
 }
@@ -83,11 +84,11 @@ extern "C" bool warp_tab_draw(float scale) {
             if (!strcmp(kWarpSpots[i].level, cur)) { g_group = kWarpSpots[i].group; break; }
     }
 
-    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "Warp");
+    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "%s", ui_tr("Warp"));
     ImGui::SameLine();
-    if (avail) ImGui::TextDisabled("   Link is in: %s", *cur ? cur : "?");
-    else ImGui::TextDisabled("   Load a save and get into the game to warp.");
-    if (g_last[0]) { ImGui::SameLine(); ImGui::TextDisabled("   Last warp: %s", g_last); }
+    if (avail) ImGui::TextDisabled(ui_tr("   Link is in: %s"), *cur ? cur : "?");
+    else ImGui::TextDisabled("%s", ui_tr("   Load a save and get into the game to warp."));
+    if (g_last[0]) { ImGui::SameLine(); ImGui::TextDisabled(ui_tr("   Last warp: %s"), g_last); }
     ImGui::Separator();
 
     // group buttons (dpad left/right + A, or click) and a search box
@@ -95,7 +96,7 @@ extern "C" bool warp_tab_draw(float scale) {
         if (g) ImGui::SameLine();
         bool sel = g_group == g;
         if (sel) ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_Header));
-        if (ImGui::Button(kWarpGroups[g])) { g_group = g; g_filter[0] = 0; }
+        if (ImGui::Button(ui_tr(kWarpGroups[g]))) { g_group = g; g_filter[0] = 0; }
         if (sel) ImGui::PopStyleColor();
     }
     ImGui::SameLine();
@@ -110,7 +111,7 @@ extern "C" bool warp_tab_draw(float scale) {
         for (int i = 0; i < kNumSpots; i++)
             if (matches(kWarpSpots[i], getenv("LARECOMP_WARP_MENU_PICK"))) {
                 warp_request(kWarpSpots[i].level, kWarpSpots[i].locator);
-                snprintf(g_last, sizeof g_last, "%s  -  %s", kWarpSpots[i].area, kWarpSpots[i].label);
+                snprintf(g_last, sizeof g_last, "%s  -  %s", ui_tr(kWarpSpots[i].area), ui_tr(kWarpSpots[i].label));
                 LOG("[warp] menu test pick: %s\n", g_last);
                 started = true;
                 break;

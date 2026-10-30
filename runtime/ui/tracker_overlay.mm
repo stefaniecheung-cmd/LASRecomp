@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr: the tracker's item, place and dungeon names)
 #include <SDL3/SDL_timer.h>
 
 extern "C" {
@@ -557,7 +558,7 @@ static std::string pretty(const std::string &n) {
     std::string s = n;
     for (char &ch : s) if (ch == '-') ch = ' ';
     if (!s.empty()) s[0] = (char)toupper(s[0]);
-    return s;
+    return ui_tr(s.c_str());
 }
 static std::string item_name(int id, int cnt) {
     static const struct { const char *tok, *name; } names[] = {
@@ -580,7 +581,7 @@ static std::string item_name(int id, int cnt) {
         {"arrow-capacity", "Arrow upgrade"}};
     const std::string &t = g_tok_names[id];
     std::string s;
-    for (auto &x : names) if (t == x.tok) s = x.name;
+    for (auto &x : names) if (t == x.tok) s = ui_tr(x.name);
     // (in-game wording: the list already names the dungeon; a soul by its owner, "Moldorm's soul")
     if (s.empty() && !t.compare(0, 4, "key-")) return cnt > 1 ? std::to_string(cnt) + " small keys" : "a small key";
     else if (s.empty() && !t.compare(0, 14, "nightmare-key-")) return "Nightmare Key";
@@ -608,13 +609,13 @@ static std::string area_name(const std::string &a) {
         {"bottle-grotto", "Bottle Grotto"}, {"key-cavern", "Key Cavern"}, {"angler-tunnel", "Angler's Tunnel"},
         {"catfish-maw", "Catfish's Maw"}, {"face-shrine", "Face Shrine"}, {"eagle-tower", "Eagle's Tower"},
         {"turtle-rock", "Turtle Rock"}, {"color-dungeon", "Color Dungeon"}};
-    for (auto &x : names) if (a == x.tok) return x.name;
+    for (auto &x : names) if (a == x.tok) return ui_tr(x.name);
     return pretty(a);
 }
 static const char *dungeon_name(const std::string &label) {
     static const char *const n[] = {"Color Dungeon", "Tail Cave", "Bottle Grotto", "Key Cavern", "Angler's Tunnel",
                                     "Catfish's Maw", "Face Shrine", "Eagle's Tower", "Turtle Rock"};
-    if (label.size() == 2 && label[0] == 'D' && label[1] >= '0' && label[1] <= '8') return n[label[1] - '0'];
+    if (label.size() == 2 && label[0] == 'D' && label[1] >= '0' && label[1] <= '8') return ui_tr(n[label[1] - '0']);
     return label.c_str();
 }
 

@@ -2034,14 +2034,14 @@ extern "C" void launcher_run(const char *root) {
                     // opens this window instead of crashing on Play)
                     ImGui::Dummy(ImVec2(0, 14 * sc));
                     ImGui::PushTextWrapPos(0);
-                    ImGui::TextColored(ImVec4(1, 0.5f, 0.4f, 1), "%s", status.c_str());
-                    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), "%s", status_hint(status));
+                    ImGui::TextColored(ImVec4(1, 0.5f, 0.4f, 1), "%s", ui_tr(status.c_str()));
+                    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), "%s", ui_tr(status_hint(status)));
                     ImGui::PopTextWrapPos();
                 } else if (ready && files_changed(g_root)) {  // (playable, but a damaged or changed file: #391)
                     ImGui::Dummy(ImVec2(0, 14 * sc));
                     ImGui::PushTextWrapPos(0);
-                    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "%s", CHANGED_HEAD);
-                    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), "%s", CHANGED_HINT);
+                    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "%s", ui_tr(CHANGED_HEAD));
+                    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), "%s", ui_tr(CHANGED_HINT));
                     ImGui::PopTextWrapPos();
                 }
                 if (!ready && g_onedrive > 0 && !g_settings.onedrive_kept) {  // (before the copy is the time to move)
@@ -2112,9 +2112,9 @@ extern "C" void launcher_run(const char *root) {
                 }
                 ImGui::TextColored(ImVec4(0.66f, 0.76f, 0.98f, 1), "Nintendo Switch  \xc2\xb7  v%s", version_label.c_str());
             } else {
-                ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "!  %s", busy ? "Setting up the game files..." : status.c_str());
+                ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "!  %s", ui_tr(busy ? "Setting up the game files..." : status.c_str()));
                 ImGui::SetCursorPosX(x0);
-                ImGui::TextDisabled("%s", busy ? "Set up the game files to play." : status_hint(status));
+                ImGui::TextDisabled("%s", ui_tr(busy ? "Set up the game files to play." : status_hint(status)));
             }
             if (g_onedrive > 0 && !g_settings.onedrive_kept) {
                 float w = fminf(ds.x * 0.42f, 560 * s);
