@@ -2,6 +2,7 @@
 // (applied where the game computes Link's damage, see tools/patches.py DAMAGE_*_SITES); rt_hero_mode() reads the game's own Hero Mode flag (PlayerStatus+0x120 = save
 // 0x55E0). Settings persist in larecomp.ini (g_settings.diff_*).
 #include "../game_addresses.h"
+#include "localization.h"  // (ui_tr: the labels and descriptions on this page)
 #include <math.h>
 #include <stdint.h>
 #include <stdlib.h>

@@ -16,6 +16,7 @@
 #include <string.h>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr: the labels and descriptions on this page)
 #ifdef __APPLE__
 #import <Metal/Metal.h>
 #endif
