@@ -5,6 +5,12 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>  // (GetUserDefaultLocaleName: the host's own language for LANG_AUTO)
+#endif
+
 #include "hle.h"
 #include "input_bind.h"
 
@@ -58,15 +64,8 @@ const char *const g_language_names[N_LANGUAGES] = {"Auto", "Japanese", "English"
                                                    "Italian", "Dutch", "Russian", "Korean", "Chinese (Simplified)",
                                                    "Chinese (Traditional)"};
 
-// LANG_AUTO: the host's own language (LANG=es_ES.UTF-8 -> es), en-US when it is none of the game's. Linux only:
-// macOS / Windows apps get no locale variables from the system, so Auto is English there (pick one in settings).
-static const char *host_language(void) {
-#ifndef __linux__
-    return "en-US";
-#endif
-    const char *e = getenv("LC_ALL");
-    if (!e || !*e) e = getenv("LC_MESSAGES");
-    if (!e || !*e) e = getenv("LANG");
+// One locale tag -> the game's own code: zh-Hans / zh-Hant / ja / ko / ru / nl / de / it / fr / es, en-US for the rest.
+static const char *locale_code(const char *e) {
     if (!e || !*e || !strcmp(e, "C") || !strcmp(e, "POSIX")) return "en-US";
     if (!strncmp(e, "zh", 2) && (!e[2] || strchr("_-.@", e[2]))) {
         char locale[64];
@@ -85,12 +84,35 @@ static const char *host_language(void) {
     }
     char l[8] = {0};
     size_t n = 0;
-    for (const char *p = e; *p && *p != '.' && *p != '@' && *p != '_' && n < sizeof l - 1; p++) l[n++] = *p;
+    // (C locale strings use '_' (ja_JP.UTF-8), Windows locale names '-' (ja-JP): either ends the language part)
+    for (const char *p = e; *p && *p != '.' && *p != '@' && *p != '_' && *p != '-' && n < sizeof l - 1; p++)
+        l[n++] = *p;
     static const struct { const char *loc, *code; } map[] = {{"ja", "ja"}, {"ko", "ko"}, {"ru", "ru"}, {"nl", "nl"},
                                                              {"de", "de"}, {"it", "it"}, {"fr", "fr"}, {"es", "es"}};
     for (size_t i = 0; i < sizeof map / sizeof *map; i++)
         if (!strcmp(l, map[i].loc)) return map[i].code;
     return "en-US";
+}
+
+// LANG_AUTO: the host's own language. Linux reads LANG / LC_*, Windows asks the user's display locale
+// (zh-CN -> zh-Hans, zh-TW -> zh-Hant: a Chinese Windows then starts in Chinese instead of English). macOS apps get no
+// C-level locale without Foundation, so Auto stays English there (pick one in settings).
+static const char *host_language(void) {
+#ifdef __linux__
+    const char *e = getenv("LC_ALL");
+    if (!e || !*e) e = getenv("LC_MESSAGES");
+    if (!e || !*e) e = getenv("LANG");
+    return locale_code(e);
+#elif defined(_WIN32)
+    wchar_t name[LOCALE_NAME_MAX_LENGTH];
+    char utf8[128];
+    if (GetUserDefaultLocaleName(name, LOCALE_NAME_MAX_LENGTH) > 0 &&
+        WideCharToMultiByte(CP_UTF8, 0, name, -1, utf8, sizeof utf8, NULL, NULL) > 0)
+        return locale_code(utf8);
+    return "en-US";
+#else
+    return "en-US";
+#endif
 }
 
 const char *settings_language(void) {
