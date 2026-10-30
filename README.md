@@ -1,6 +1,6 @@
 # LAS Recomp Beta 5.3 — 中文界面版
 
-> 个人自用的 **Windows** 构建：官方 Beta 5.3 加中文界面。
+> 个人自用的 **Windows** 构建：官方 Beta 5.4 加中文界面。
 > 不含任何游戏文件、密钥或转储工具——那些需要你自己的正版备份。
 
 这个仓库是 [peiikai/LASRecomp](https://github.com/peiikai/LASRecomp) 的 fork，只做了一件事：
