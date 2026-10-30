@@ -259,14 +259,17 @@ static std::string seed_id_decode(const char *text, GenOpts &o) {
         chars++;
     }
     int bits = chars * 5;  // 30 characters (v5), 25 (v4), or 20 (v2 / v3)
-    if (bits != SEED_ID_BITS && bits != SEED_ID_BITS_V4 && bits != SEED_ID_BITS_V3) return "a seed ID has 30 characters";
+    if (bits != SEED_ID_BITS && bits != SEED_ID_BITS_V4 && bits != SEED_ID_BITS_V3) return ui_tr("a seed ID has 30 characters");
     uint32_t sum = 0;
     for (int i = 0; i < 5; i++) sum |= (uint32_t)x.b[bits - 5 + i] << i;
     if (sum != id_check(x, bits - 5)) return "typo? (checksum doesn't match)";
     x.n = 0;
     int ver = (int)x.get(4);
-    if (bits == SEED_ID_BITS ? ver != SEED_ID_VERSION : bits == SEED_ID_BITS_V4 ? ver != 4 : ver != 2 && ver != 3)
-        return "made by another LAS Recomp version (ID format " + std::to_string(ver) + ")";
+    if (bits == SEED_ID_BITS ? ver != SEED_ID_VERSION : bits == SEED_ID_BITS_V4 ? ver != 4 : ver != 2 && ver != 3) {
+        char bad[96];
+        snprintf(bad, sizeof bad, ui_tr("made by another LAS Recomp version (ID format %d)"), ver);
+        return bad;
+    }
     GenOpts t = o;
     t.rng = x.get(36);
     t.logic = (int)x.get(3); t.dungeon_items = (int)x.get(2); t.keysanity = (int)x.get(2); t.traps = (int)x.get(3);

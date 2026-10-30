@@ -142,8 +142,8 @@ extern "C" void difficulty_draw(float scale) {
     opt_indent(1);
     {
         char d[160];
-        snprintf(d, sizeof d, "Where LiveSplit's Server listens: host:port.%s",
-                 !g_settings.livesplit ? "" : livesplit_connected() ? "\n\nConnected." : "\n\nNot connected.");
+        snprintf(d, sizeof d, ui_tr("Where LiveSplit's Server listens: host:port.%s"),
+                 !g_settings.livesplit ? "" : livesplit_connected() ? ui_tr("\n\nConnected.") : ui_tr("\n\nNot connected."));
         if (!g_settings.livesplit) opt_disable_next();
         if (opt_text("Server", g_settings.livesplit_host, sizeof g_settings.livesplit_host, "localhost:16834", d)) {
             if (!g_settings.livesplit_host[0]) snprintf(g_settings.livesplit_host, sizeof g_settings.livesplit_host, "localhost:16834");

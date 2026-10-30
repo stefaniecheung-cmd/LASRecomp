@@ -445,7 +445,7 @@ static void tab_display(void) {
                                       "75%% / 50%% / 25%%: a share of the display, for slower machines.\n\nRendering at "
                                       "%.0f x %.0f.", g_gpu_integrated ? " (1x: 720p on this GPU)" : "", 1920.0 * sx, 1080.0 * sy);
         if (g_settings.res_mode == RES_DYNAMIC)
-            snprintf(d + n, sizeof d - n, " Dynamic: %.0f%% of the display right now.", output_scale_dynamic_factor() * 100);
+            snprintf(d + n, sizeof d - n, ui_tr(" Dynamic: %.0f%% of the display right now."), output_scale_dynamic_factor() * 100);
         if (opt_choice("Internal resolution", &ri, res, NRES, rdef, d, false))
             g_settings.res_mode = res_mode[ri], g_settings.res_auto = false;
     }
@@ -462,11 +462,11 @@ static void tab_display(void) {
         int ui = g_settings.upscaler == UPSCALE_BILINEAR ? 0 : 1;
         char udm[512];
         if (g_settings.res_mode == RES_MATCH) {  // (renders at the window's size: nothing to scale up)
-            snprintf(udm, sizeof udm, "%s\n\nNot used at Match display: the game already renders at your display's resolution.", ud);
+            snprintf(udm, sizeof udm, ui_tr("%s\n\nNot used at Match display: the game already renders at your display's resolution."), ui_tr(ud));
             ud = udm;
             opt_disable_next();
         }
-        if (opt_choice("Upscaler", &ui, ups, 2, g_default_upscaler == UPSCALE_BILINEAR ? 0 : 1, ud))
+        if (opt_choice("Upscaler", &ui, ups, 2, g_default_upscaler == UPSCALE_BILINEAR ? 0 : 1, ui_tr(ud)))
             g_settings.upscaler = ui ? UPSCALE_SHARP : UPSCALE_BILINEAR, g_settings.upscaler_auto = false;
     }
     static const char *aa[] = {"Off", "SMAA"};
@@ -562,15 +562,15 @@ static void tab_quit(float scale, bool in_game) {
     static int ask;  // 0: the two choices; 1: start screen?; 2: desktop?
     if (ask && (ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) || ImGui::IsKeyPressed(ImGuiKey_Escape, false)))
         ask = 0;
-    const char *lost = in_game ? "\n\nProgress since your last save is lost." : "";
+    const char *lost = in_game ? ui_tr("\n\nProgress since your last save is lost.") : "";
     char d1[200], d2[200];
-    snprintf(d1, sizeof d1, "Leaves the game and goes back to the LAS Recomp start screen.%s", lost);
-    snprintf(d2, sizeof d2, "Closes LAS Recomp.%s", lost);
+    snprintf(d1, sizeof d1, ui_tr("Leaves the game and goes back to the LAS Recomp start screen.%s"), lost);
+    snprintf(d2, sizeof d2, ui_tr("Closes LAS Recomp.%s"), lost);
     opt_begin("##quit", scale);
     opt_section("Quit");
     if (!ask) {
         if (!in_game) opt_disable_next();  // (already on it)
-        if (opt_action("Quit to Start Screen", "", in_game ? d1 : "You're on the start screen.")) ask = 1;
+        if (opt_action("Quit to Start Screen", "", in_game ? d1 : ui_tr("You're on the start screen."))) ask = 1;
         if (opt_action("Quit to Desktop", "", d2)) ask = 2;
     } else {
         if (opt_action(ask == 1 ? "Yes, quit to Start Screen" : "Yes, quit to Desktop", "", ask == 1 ? d1 : d2)) {
@@ -585,7 +585,7 @@ static void tab_quit(float scale, bool in_game) {
             }
             ask = 0;
         }
-        if (opt_action("Cancel", "", "Stays where you are.")) ask = 0;
+        if (opt_action("Cancel", "", ui_tr("Stays where you are."))) ask = 0;
     }
     opt_end();
 }

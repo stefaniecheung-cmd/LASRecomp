@@ -187,7 +187,7 @@ extern "C" void pickup_flyin_draw(ImVec2 display, ImFont *font, float scale) {
     if (it == IT_HEART_PIECE) {
         int n = g_card.held % 4;
         quarters = n ? n : 4;
-        snprintf(title, sizeof title, "Piece of Heart");
+        snprintf(title, sizeof title, "%s", ui_tr("Piece of Heart"));
         if (n) snprintf(value, sizeof value, "%d / 4", n);
         else snprintf(value, sizeof value, "4 / 4   +1 Heart");
     } else if (it == IT_HEART_CONTAINER) {

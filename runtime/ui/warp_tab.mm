@@ -134,7 +134,7 @@ extern "C" bool warp_tab_draw(float scale) {
                 bool here = false;
                 for (int k = i; k < j; k++) here |= !strcmp(kWarpSpots[k].level, cur) && strcmp(cur, "Field");
                 char hdr[160];
-                snprintf(hdr, sizeof hdr, "%s%s  (%d)###%s", a.area, here ? "   <- Link is here" : "", j - i, a.area);
+                snprintf(hdr, sizeof hdr, "%s%s  (%d)###%s", a.area, here ? ui_tr("   <- Link is here") : "", j - i, a.area);
                 if (ImGui::CollapsingHeader(hdr)) {
                     ImGui::Indent();
                     for (int k = i; k < j; k++) started |= spot(kWarpSpots[k], false, avail);

@@ -1274,7 +1274,7 @@ static int draw_list(ImDrawList *dl, ImFont *font, float ox, float oy, float u, 
         std::string nm = c.title.empty() ? pretty(c.name) : c.title;
         ImU32 ncol = r.st == ST_DONE ? IM_COL32(0x8C, 0x7B, 0x62, 255) : ink;
         std::string where = !c.dcell.empty() ? room_label(c) : !c.spot.empty() ? c.spot : c.area.empty() ? "" : area_name(c.area);
-        std::string tag = r.st == ST_TRICK ? "trick logic" : r.st == ST_NEEDS ? needs_text(r.check, font, 210 * u / fs_k) : "";
+        std::string tag = r.st == ST_TRICK ? ui_tr("trick logic") : r.st == ST_NEEDS ? needs_text(r.check, font, 210 * u / fs_k) : "";
         ImVec2 tg = tag.empty() ? ImVec2(0, 0) : text_size(font, fs_k, tag.c_str());
         float tag_w = tag.empty() ? 0 : std::min(tg.x + 20 * u, 230 * u);
         float wx = rz.x - 14 * u - tag_w - (tag_w > 0 ? 12 * u : 0) - 140 * u;  // the spot column
@@ -1332,7 +1332,7 @@ static std::vector<std::string> dungeon_pills(const std::string &dk) {
     if (!g_room_shuffle.empty() && g_room_shuffle != "off") {
         std::string m = g_room_shuffle;
         m[0] = (char)toupper(m[0]);
-        p.push_back("Room shuffle: " + m);
+        p.push_back(std::string(ui_tr("Room shuffle: ")) + m);
     }
     return p;
 }
@@ -1399,7 +1399,7 @@ extern "C" void tracker_overlay_draw(ImVec2 display, ImFont *font) {
         if (kLabel[i][0] && snap.lab_ok[i]) {  // (lp: the name's centre)
             lp[i] = ImVec2(snap.lab_x[i], snap.lab_y[i]), lshown[i] = snap.lab_shown[i];
             lhave[i] = true, nlabels++;
-            lw[i] = name_k * text_size(font, 1, kLabel[i]).x;
+            lw[i] = name_k * text_size(font, 1, ui_tr(kLabel[i])).x;
             if (snap.lab_align[i] == 1) lp[i].x += lw[i] * 0.5f;
             else if (snap.lab_align[i] == 2) lp[i].x -= lw[i] * 0.5f;
         }
@@ -1477,7 +1477,7 @@ extern "C" void tracker_overlay_draw(ImVec2 display, ImFont *font) {
         return id >= 0 && id < (int)g_group_checks.size() ? &g_group_checks[id] : nullptr;
     };
     auto title_of = [&](int type, int id) -> std::string {
-        if (type == 0) return id >= 0 && id < 21 ? kLabel[id] : "";
+        if (type == 0) return id >= 0 && id < 21 ? ui_tr(kLabel[id]) : "";
         return std::string(dungeon_name(g_groups[id].label)) + " (" + g_groups[id].label + ")";
     };
     auto open_panel = [&](int type, int id) {

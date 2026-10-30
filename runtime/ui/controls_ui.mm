@@ -123,7 +123,7 @@ static void watch_results(int fam, char *msg, size_t cap) {
     seen = serial;
     msg[0] = 0;
     if (kind == 2)
-        snprintf(msg, cap, "%s moved to %s (swapped).", bind_input_name(rother),
+        snprintf(msg, cap, ui_tr("%s moved to %s (swapped)."), bind_input_name(rother),
                  rdev == BIND_DEV_PAD ? bind_pad_label(g_bind_pad[rother], fam) : bind_key_label(g_bind_key[rother]));
     if (kind == 1 || kind == 2 || kind == 5) settings_save();
 }
@@ -195,7 +195,7 @@ static void configure_inputs(float scale) {
             if (b.section) opt_section(b.section);
             bool waiting = cd == dev && cs == b.slot;
             char val[64];
-            if (waiting) snprintf(val, sizeof val, "%s...  %d", g_dev_pad ? "Press a button" : "Press a key", (ms + 999) / 1000);
+            if (waiting) snprintf(val, sizeof val, "%s...  %d", ui_tr(g_dev_pad ? "Press a button" : "Press a key"), (ms + 999) / 1000);
             else snprintf(val, sizeof val, "%s", g_dev_pad ? bind_pad_label(g_bind_pad[b.slot], fam) : bind_key_label(g_bind_key[b.slot]));
             // the same button / key on two inputs (a hand-edited larecomp.ini): red
             const int16_t *t = g_dev_pad ? g_bind_pad : g_bind_key;
