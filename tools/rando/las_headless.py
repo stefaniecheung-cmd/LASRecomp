@@ -545,7 +545,8 @@ def main():
     if os.environ.get('LARECOMP_CHECK_ONLY'):  # (test: tools/rando/seed_sweep.py - placements + logic, no game files)
         with open(os.path.join(out_dir, 'placements.json'), 'w') as f:
             json.dump({'placements': {k: v for k, v in pl.items() if isinstance(v, str)},
-                       'access': {k: 1 for k, v in settings.items() if v is True}}, f)
+                       'access': {k: 1 for k, v in settings.items() if v is True},
+                       **({'room-plan': {'layouts': room_plan[0], 'jumps': room_plan[1]}} if room_plan else {})}, f)
         sys.exit(0)
 
     if pot_locs or bush_locs or dig_locs:  # bomb / powder / arrow refills anywhere: only once owned, else a blue rupee (runtime)
