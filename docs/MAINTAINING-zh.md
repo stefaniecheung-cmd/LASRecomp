@@ -95,6 +95,14 @@ gh workflow run release.yml --ref zh-cn -f tag=beta_5.4 -f ref=$(git rev-parse H
 - 解出来的 AppImage 直接改名发布即可（例如 `LAS.Recomp-beta.AppImage`）；Steam 上启动参数用
   `APPIMAGE_EXTRACT_AND_RUN=1 %command%`，不要走 Proton。
 
+### 发布作业（`release`）常见失败
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| `HTTP 403: Resource not accessible by integration` (POST /releases) | fork 的 **Settings → Actions → General → Workflow permissions** 默认是 *Read repository contents*，`jobs.release` 里的 `permissions: contents: write` 不足以提权 | 改成 **Read and write**（或用 PAT 手动建）：`curl -X PUT .../actions/permissions/workflow -d '{"default_workflow_permissions":"write"}'`。改完必须**重新 dispatch 一个新运行**——重跑（re-run）会沿用旧运行的权限快照，仍然 403 |
+| 草稿 release 里是旧产物 | 上一次运行留下的草稿仍在，`gh release edit` 把 target 指回旧 SHA 或直接失败 | 先删草稿：`curl -X DELETE .../releases/<id>`，再 dispatch。草稿的 target 应等于本次 `check` 输出的 SHA |
+| `expected 4 files` | 四个平台产物没齐（某个 job 挂了，或同名 artifact 被覆盖） | 看哪个 job 失败先修，不要绕过这条断言 |
+
 ## 6. 上游同步
 
 ```bash
