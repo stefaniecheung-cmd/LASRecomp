@@ -13,6 +13,7 @@
 #include <string>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "seed_hash.h"
 #ifdef __APPLE__
 #import <Metal/Metal.h>
@@ -180,7 +181,7 @@ extern "C" void race_overlay_draw(ImVec2 display, ImFont *font, float scale) {
         ImVec2 a(display.x - 24 * scale - w, (display.y - h) * 0.5f), b(a.x + w, a.y + h);
         dl->AddRectFilled(a, b, IM_COL32(12, 20, 16, 205), 14 * scale);
         dl->AddRect(a, b, IM_COL32(236, 194, 84, 200), 14 * scale, 0, fmaxf(1.0f, 2 * scale));
-        dl->AddText(font, label, ImVec2(a.x + pad, a.y + pad * 0.6f), IM_COL32(236, 194, 84, 255), "SEED HASH");
+        dl->AddText(font, label, ImVec2(a.x + pad, a.y + pad * 0.6f), IM_COL32(236, 194, 84, 255), ui_tr("SEED HASH"));
         for (int i = 0; i < 5; i++) {
             const Icon &ic = g_icons[g_hash[i]];
             const char *nm = kSeedHashIcons[g_hash[i]].name;

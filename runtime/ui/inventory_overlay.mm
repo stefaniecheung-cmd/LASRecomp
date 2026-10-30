@@ -15,6 +15,7 @@
 
 #include <string>
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 
 extern "C" {
 #include "../hle.h"
@@ -331,7 +332,7 @@ static void pets_draw(ImDrawList *dl, ImFont *font, float ox, float oy, float u)
         ImVec2 ts = font->CalcTextSizeA(fs, FLT_MAX, 0, "Choose");
         float w = 22 * u + ts.x, x0 = cx - w * 0.5f;
         confirm_glyph(dl, font, ImVec2(x0 + 8 * u, y), 9 * u);
-        dl->AddText(font, fs, ImVec2(x0 + 22 * u, y - ts.y * 0.5f), IM_COL32(255, 245, 225, 255), "Choose");
+        dl->AddText(font, fs, ImVec2(x0 + 22 * u, y - ts.y * 0.5f), IM_COL32(255, 245, 225, 255), ui_tr("Choose"));
     } else {  // a hint that the grid's cursor reaches it: an arrow on the card's right edge
         float y = (a.y + b.y) * 0.5f;
         dl->AddTriangleFilled(ImVec2(b.x - 4 * u, y - 7 * u), ImVec2(b.x - 4 * u, y + 7 * u), ImVec2(b.x - 12 * u, y),

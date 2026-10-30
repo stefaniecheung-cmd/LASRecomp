@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "option_rows.h"
 
 extern "C" {
@@ -65,7 +66,7 @@ extern "C" void cheats_frame(void) {
 
 extern "C" void cheats_draw(float scale) {
     if (!game_in_play()) {
-        ImGui::TextDisabled("Load a save file and get into the game to use cheats.");
+        ImGui::TextDisabled(ui_tr("Load a save file and get into the game to use cheats."));
         return;
     }
     opt_begin("##cheats", scale);

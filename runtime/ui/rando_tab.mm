@@ -13,6 +13,7 @@
 #include <algorithm>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "imgui_internal.h"
 #include "osk.h"
 #include "option_rows.h"
@@ -543,13 +544,13 @@ static void gen_overlay(float scale) {
             ImGui::TextColored(ImVec4(1, 0.5f, 0.4f, 1), "%s", g_gen_status.c_str());
             ImGui::PopTextWrapPos();
             ImGui::Spacing();
-            if (ImGui::Button("Close", ImVec2(bw, 0))) close = true;
+            if (ImGui::Button(ui_label("Close").c_str(), ImVec2(bw, 0))) close = true;
             ImGui::SetItemDefaultFocus();
         } else {
-            ImGui::TextUnformatted("Seed ready.");
-            ImGui::ProgressBar(1, ImVec2(-1, 0), "Done");
+            ImGui::TextUnformatted(ui_tr("Seed ready."));
+            ImGui::ProgressBar(1, ImVec2(-1, 0), ui_tr("Done"));
             ImGui::Spacing();
-            if (ImGui::Button("Play Now", ImVec2(bw, 0)) || test_play) {  // (switches in place: the game reboots on the new seed)
+            if (ImGui::Button(ui_label("Play Now").c_str(), ImVec2(bw, 0)) || test_play) {  // (switches in place: the game reboots on the new seed)
                 g_gen_done = false;
                 g_gen_status.clear();
                 ImGui::CloseCurrentPopup();
@@ -557,7 +558,7 @@ static void gen_overlay(float scale) {
             }
             ImGui::SetItemDefaultFocus();
             ImGui::SameLine();
-            if (ImGui::Button("Close", ImVec2(bw, 0))) close = true;
+            if (ImGui::Button(ui_label("Close").c_str(), ImVec2(bw, 0))) close = true;
         }
         if (close || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) || ImGui::IsKeyPressed(ImGuiKey_Escape, false)) {
             g_gen_done = false;
@@ -671,30 +672,30 @@ extern "C" void rando_tab_draw(float scale) {
                     }
                     if (ui_input_text_cancelled()) renaming = false;
                 } else if (confirm_delete) {
-                    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "Delete this seed and its save files?");
+                    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), ui_tr("Delete this seed and its save files?"));
                     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.7f, 0.15f, 0.15f, 1));
                     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.85f, 0.2f, 0.2f, 1));
-                    if (ImGui::Button("Delete seed + saves", ImVec2(bw, 0))) { delete_seed(s.name); close = true; }
+                    if (ImGui::Button(ui_label("Delete seed + saves").c_str(), ImVec2(bw, 0))) { delete_seed(s.name); close = true; }
                     ImGui::PopStyleColor(2);
                     ImGui::SameLine();
                     ImGui::SetItemDefaultFocus();
-                    if (ImGui::Button("Cancel", ImVec2(bw, 0))) confirm_delete = false;
+                    if (ImGui::Button(ui_label("Cancel").c_str(), ImVec2(bw, 0))) confirm_delete = false;
                 } else {
-                    if (!is_active && ImGui::Button("Play", ImVec2(bw, 0))) { ImGui::CloseCurrentPopup(); play_seed(s.name.c_str()); }
+                    if (!is_active && ImGui::Button(ui_label("Play").c_str(), ImVec2(bw, 0))) { ImGui::CloseCurrentPopup(); play_seed(s.name.c_str()); }
                     ImGui::BeginDisabled(s.race && !s.race_done);  // (race mode: shut until the credits)
-                    if (ImGui::Button(s.race && !s.race_done ? "Spoiler log (locked)" : "Spoiler log", ImVec2(bw, 0))) {
+                    if (ImGui::Button(ui_label(s.race && !s.race_done ? "Spoiler log (locked)" : "Spoiler log").c_str(), ImVec2(bw, 0))) {
                         g_spoiler_seed = s.name;
                         close = true;
                     }
                     ImGui::EndDisabled();
                     ImGui::BeginDisabled(s.id.empty());
-                    if (ImGui::Button("Copy seed ID", ImVec2(bw, 0))) ImGui::SetClipboardText(s.id.c_str());
+                    if (ImGui::Button(ui_label("Copy seed ID").c_str(), ImVec2(bw, 0))) ImGui::SetClipboardText(s.id.c_str());
                     ImGui::EndDisabled();
                     ImGui::BeginDisabled(is_active);  // (the game is reading its files)
-                    if (ImGui::Button("Rename", ImVec2(bw, 0))) { renaming = true; strlcpy(rename_buf, s.name.c_str(), sizeof rename_buf); }
-                    if (ImGui::Button("Delete", ImVec2(bw, 0))) confirm_delete = true;
+                    if (ImGui::Button(ui_label("Rename").c_str(), ImVec2(bw, 0))) { renaming = true; strlcpy(rename_buf, s.name.c_str(), sizeof rename_buf); }
+                    if (ImGui::Button(ui_label("Delete").c_str(), ImVec2(bw, 0))) confirm_delete = true;
                     ImGui::EndDisabled();
-                    if (ImGui::Button("Close", ImVec2(bw, 0))) close = true;
+                    if (ImGui::Button(ui_label("Close").c_str(), ImVec2(bw, 0))) close = true;
                 }
                 if (!renaming && (ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) || ImGui::IsKeyPressed(ImGuiKey_Escape, false))) {
                     if (confirm_delete) confirm_delete = false;
@@ -874,10 +875,10 @@ extern "C" void rando_tab_draw(float scale) {
         opt_indent(-1);
         if (last) ImGui::OpenPopup("##entlast");
         if (ImGui::BeginPopupModal("##entlast", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar)) {
-            ImGui::TextUnformatted("With the entrance randomizer on, at least one kind of entrance must be shuffled.");
+            ImGui::TextUnformatted(ui_tr("With the entrance randomizer on, at least one kind of entrance must be shuffled."));
             ImGui::Spacing();
             ImGui::SetItemDefaultFocus();
-            if (ImGui::Button("OK", ImVec2(220 * scale, 0)) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) ||
+            if (ImGui::Button(ui_label("OK").c_str(), ImVec2(220 * scale, 0)) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) ||
                 ImGui::IsKeyPressed(ImGuiKey_Escape, false))
                 ImGui::CloseCurrentPopup();
             ImGui::EndPopup();
@@ -992,7 +993,7 @@ extern "C" void rando_tab_draw(float scale) {
         }
         opt_split();
         ImGui::SetWindowFontScale(1.3f);  // (as the descriptions)
-        ImGui::TextWrapped("How many pieces finish the game: 1 to 50.");
+        ImGui::TextWrapped(ui_tr("How many pieces finish the game: 1 to 50."));
         ImGui::SetWindowFontScale(1.0f);
         ImGui::Spacing();
         opt_section("Custom");

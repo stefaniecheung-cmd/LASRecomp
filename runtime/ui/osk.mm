@@ -12,6 +12,7 @@
 #include <string>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "imgui_internal.h"
 #include "osk.h"
 #include "pad_nav.h"
@@ -132,13 +133,13 @@ int osk_keys(char *text, size_t cap, int max_chars, bool appearing, float scale,
     }
     if (ImGui::Button(upper ? "abc" : "ABC", ImVec2(k * 2, k))) upper = !upper;
     ImGui::SameLine();
-    if (ImGui::Button("Space", ImVec2(k * 3, k)) && len > 0) add(' ');
+    if (ImGui::Button(ui_label("Space").c_str(), ImVec2(k * 3, k)) && len > 0) add(' ');
     ImGui::SameLine();
-    if (ImGui::Button("Delete", ImVec2(k * 2, k))) del();
+    if (ImGui::Button(ui_label("Delete").c_str(), ImVec2(k * 2, k))) del();
     ImGui::SameLine();
-    if (ImGui::Button("Cancel", ImVec2(k * 2, k))) r = -1;
+    if (ImGui::Button(ui_label("Cancel").c_str(), ImVec2(k * 2, k))) r = -1;
     ImGui::SameLine();
-    if (ImGui::Button("OK", ImVec2(k * 2, k))) r = 1;
+    if (ImGui::Button(ui_label("OK").c_str(), ImVec2(k * 2, k))) r = 1;
     ImGui::TextDisabled("%s  type      %s  delete      %s  OK      (%d / %d)", ui_pad_confirm_label(), ui_pad_back_label(),
                         ui_pad_start_label(), len, max_chars);
     return r;

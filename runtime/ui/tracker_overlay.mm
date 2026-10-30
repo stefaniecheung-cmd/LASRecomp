@@ -1187,7 +1187,7 @@ static bool draw_filter_panel(ImDrawList *dl, ImFont *font, float ox, float oy, 
     ImVec2 a(ox + 640 * u - w * 0.5f, oy + 380 * u - h * 0.5f), z(a.x + w, a.y + h);
     parchment(dl, a, z, u);
     if (mouse.x >= a.x && mouse.x <= z.x && mouse.y >= a.y && mouse.y <= z.y) mouse_on_ui = true;
-    dl->AddText(font, 24 * u, ImVec2(a.x + 20 * u, a.y + 14 * u), P_INK, "Filters");
+    dl->AddText(font, 24 * u, ImVec2(a.x + 20 * u, a.y + 14 * u), P_INK, ui_tr("Filters"));
     for (size_t i = 0; i < chips.size(); i++) {
         if (i == 2) dl->AddLine(ImVec2(a.x + 18 * u, a.y + 52 * u + rh * 2 + 0.5f), ImVec2(z.x - 18 * u, a.y + 52 * u + rh * 2 + 0.5f), P_LINE, 1.2f * u);
         filter_row(i, ImVec2(a.x + 12 * u, a.y + 52 * u + rh * i + (i >= 2 ? 6 * u : 0)), w - 24 * u, rh - 2 * u, 18 * u);
@@ -1891,14 +1891,14 @@ extern "C" void tracker_dungeon_draw(ImVec2 display, ImFont *font) {
             dl->AddCircleFilled(c, r, IM_COL32(40, 22, 10, 220));
             ImVec2 ts = text_size(font, fs, "A");
             dl->AddText(font, fs, ImVec2(c.x - ts.x * 0.5f, c.y - ts.y * 0.5f), IM_COL32(255, 240, 200, 255), "A");
-            dl->AddText(font, fs, ImVec2(c.x + r + 8 * u, y), P_INK, "leads to A");
+            dl->AddText(font, fs, ImVec2(c.x + r + 8 * u, y), P_INK, ui_tr("leads to A"));
             y += lh;
             if (g_room_shuffle == "decoupled") {
                 c.y += lh;
                 dl->AddRectFilled(ImVec2(c.x - r, c.y - r * 0.7f), ImVec2(c.x + r, c.y + r * 0.7f), IM_COL32(90, 30, 20, 230), r * 0.3f);
                 dl->AddTriangleFilled(ImVec2(c.x - r * 0.5f, c.y - r * 0.4f), ImVec2(c.x - r * 0.5f, c.y + r * 0.4f), ImVec2(c.x + r * 0.4f, c.y),
                                       IM_COL32(255, 200, 120, 255));
-                dl->AddText(font, fs, ImVec2(c.x + r + 8 * u, y), P_INK, "one-way");
+                dl->AddText(font, fs, ImVec2(c.x + r + 8 * u, y), P_INK, ui_tr("one-way"));
             }
         }
     }

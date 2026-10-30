@@ -124,7 +124,7 @@ extern "C" bool warp_tab_draw(float scale) {
         int shown = 0;
         for (int i = 0; i < kNumSpots && shown < 300; i++)
             if (matches(kWarpSpots[i], g_filter)) { started |= spot(kWarpSpots[i], true, avail); shown++; }
-        if (!shown) ImGui::TextDisabled("No matches.");
+        if (!shown) ImGui::TextDisabled(ui_tr("No matches."));
     } else {
         for (int i = 0; i < kNumSpots;) {
             const WarpSpot &a = kWarpSpots[i];

@@ -582,8 +582,8 @@ static int onedrive_notice(float s, float w, bool ready) {
     ImGui::PopStyleVar(2);
     ImGui::PopStyleColor();
     ImGui::PushTextWrapPos(0);
-    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "!  This folder is synced by OneDrive");
-    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), "All game files (about %.0f GB) will be uploaded to your OneDrive.",
+    ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), ui_tr("!  This folder is synced by OneDrive"));
+    ImGui::TextColored(ImVec4(0.86f, 0.85f, 0.80f, 1), ui_tr("All game files (about %.0f GB) will be uploaded to your OneDrive."),
                        fmax(1.0, gb));
     ImGui::PopTextWrapPos();
     ImGui::Dummy(ImVec2(0, 4 * s));
@@ -593,11 +593,11 @@ static int onedrive_notice(float s, float w, bool ready) {
     pthread_mutex_unlock(&g_lock);
     if (!rt_data_root_fixed()) {
         ImGui::BeginDisabled(busy);
-        if (ImGui::Button("Choose another folder")) r = 2;
+        if (ImGui::Button(ui_label("Choose another folder").c_str())) r = 2;
         ImGui::EndDisabled();
         ImGui::SameLine();
     }
-    if (ImGui::Button("Keep here")) r = 1;
+    if (ImGui::Button(ui_label("Keep here").c_str())) r = 1;
     ImGui::EndChild();
     return r;
 }
@@ -791,18 +791,18 @@ static bool aspect_prompt(float s) {
     if (open) {
         ImGui::SetWindowFontScale(1.25f);
         ImGui::PushTextWrapPos(0);
-        ImGui::TextUnformatted("How would you like to play?");
+        ImGui::TextUnformatted(ui_tr("How would you like to play?"));
         ImGui::Spacing();
-        ImGui::TextDisabled("You can change this any time in Settings.");
+        ImGui::TextDisabled(ui_tr("You can change this any time in Settings."));
         ImGui::PopTextWrapPos();
         ImGui::Dummy(ImVec2(0, 14 * s));
         float bw = 300 * s, gap = 20 * s;
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 2 * bw - gap) * 0.5f);
         int pick = -1;
         ImGui::SetItemDefaultFocus();
-        if (ImGui::Button("Authentic 16:9", ImVec2(bw, 44 * s))) pick = ASPECT_ORIGINAL;
+        if (ImGui::Button(ui_label("Authentic 16:9").c_str(), ImVec2(bw, 44 * s))) pick = ASPECT_ORIGINAL;
         ImGui::SameLine(0, gap);
-        if (ImGui::Button("Unlocked (fill the screen)", ImVec2(bw, 44 * s))) pick = ASPECT_UNLOCKED;
+        if (ImGui::Button(ui_label("Unlocked (fill the screen)").c_str(), ImVec2(bw, 44 * s))) pick = ASPECT_UNLOCKED;
         if (pick >= 0) {
             g_settings.aspect = pick;
             g_settings.aspect_asked = true;
@@ -833,15 +833,15 @@ static bool menu_tip(float s) {
         static const char *const home[] = {"Home button", "Xbox button", "PlayStation button"};  // (bind_label_family)
         static const char *const pad[] = {"Minus + Plus", "View + Menu", "Create + Options"};
         ImGui::PushTextWrapPos(0);
-        ImGui::TextUnformatted("LAS Recomp has its own menu for settings, the randomizer, cosmetics and more.");
+        ImGui::TextUnformatted(ui_tr("LAS Recomp has its own menu for settings, the randomizer, cosmetics and more."));
         ImGui::Spacing();
         int fam = bind_label_family() % 3;
-        ImGui::Text("Open it in game with F1 or Esc, or on a controller with the %s (or %s together).", home[fam], pad[fam]);
+        ImGui::Text(ui_tr("Open it in game with F1 or Esc, or on a controller with the %s (or %s together)."), home[fam], pad[fam]);
         ImGui::PopTextWrapPos();
         ImGui::Dummy(ImVec2(0, 14 * s));
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 180 * s) * 0.5f);
         ImGui::SetItemDefaultFocus();
-        if (ImGui::Button("OK", ImVec2(180 * s, 44 * s)) || ImGui::IsKeyPressed(ImGuiKey_Enter) ||
+        if (ImGui::Button(ui_label("OK").c_str(), ImVec2(180 * s, 44 * s)) || ImGui::IsKeyPressed(ImGuiKey_Enter) ||
             ImGui::IsKeyPressed(ImGuiKey_GamepadFaceDown)) {
             g_settings.menu_tip_seen = true;
             settings_save();
@@ -1243,7 +1243,7 @@ static void data_folder_popup(float s) {
     ImVec2 bw(240 * sc, 0);
     ImGui::PushFont(g_font_small);
     ImGui::PushFont(g_font_menu);
-    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), g_df == DF_MOVING ? "Moving your data" : "Data folder");
+    ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), ui_tr(g_df == DF_MOVING ? "Moving your data" : "Data folder"));
     ImGui::PopFont();
     ImGui::PushTextWrapPos(900 * sc);
     bool close = false, esc = ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) || ImGui::IsKeyPressed(ImGuiKey_Escape, false);
@@ -1255,25 +1255,25 @@ static void data_folder_popup(float s) {
     };
     if (g_df == DF_ASK) {
         ImGui::TextDisabled("%s", t.path);
-        if (g_df_onedrive) ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "This folder is synced by OneDrive too.");
+        if (g_df_onedrive) ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), ui_tr("This folder is synced by OneDrive too."));
         ImGui::Spacing();
         if (t.refuse[0]) {
             ImGui::TextColored(red, "%s", t.refuse);
             ImGui::Spacing();
-            close = ImGui::Button("OK", bw) || esc;
+            close = ImGui::Button(ui_label("OK").c_str(), bw) || esc;
         } else if (t.has_data) {
-            ImGui::Text("This folder already has LAS Recomp data. Use it?");
+            ImGui::Text(ui_tr("This folder already has LAS Recomp data. Use it?"));
             ImGui::Spacing();
-            if (ImGui::Button("Use it", bw) || g_df_auto_fresh) g_df_auto_fresh = false, use_it();
+            if (ImGui::Button(ui_label("Use it").c_str(), bw) || g_df_auto_fresh) g_df_auto_fresh = false, use_it();
             ImGui::SameLine();
-            close = ImGui::Button("Cancel", bw) || esc;
+            close = ImGui::Button(ui_label("Cancel").c_str(), bw) || esc;
         } else {
             bool room = t.free >= t.need;
-            ImGui::Text("Move your saves, seeds, settings and game files (%.1f GB) there, or start fresh?", t.bytes / 1e9);
-            if (!room) ImGui::TextColored(red, "Not enough free space there to move them (%.1f GB free).", t.free / 1e9);
+            ImGui::Text(ui_tr("Move your saves, seeds, settings and game files (%.1f GB) there, or start fresh?"), t.bytes / 1e9);
+            if (!room) ImGui::TextColored(red, ui_tr("Not enough free space there to move them (%.1f GB free)."), t.free / 1e9);
             ImGui::Spacing();
             ImGui::BeginDisabled(!room);
-            if ((ImGui::Button("Move", bw) || g_df_auto_move) && room) {
+            if ((ImGui::Button(ui_label("Move").c_str(), bw) || g_df_auto_move) && room) {
                 g_df_auto_move = false;
                 stop_background_prep();
                 settings_save();
@@ -1284,24 +1284,24 @@ static void data_folder_popup(float s) {
             }
             ImGui::EndDisabled();
             ImGui::SameLine();
-            if (ImGui::Button("Start fresh", bw) || g_df_auto_fresh) g_df_auto_fresh = false, use_it();
+            if (ImGui::Button(ui_label("Start fresh").c_str(), bw) || g_df_auto_fresh) g_df_auto_fresh = false, use_it();
             ImGui::SameLine();
             ImGui::SetItemDefaultFocus();
-            close = ImGui::Button("Cancel", bw) || esc;
+            close = ImGui::Button(ui_label("Cancel").c_str(), bw) || esc;
         }
     } else if (g_df == DF_MOVING) {
         static const char *const steps[] = {"Copying...", "Checking the copy...", "Removing the old copy..."};
         int r = g_df_result, k = g_df_step;
-        ImGui::Text("%s", r == 1 ? "Restarting..." : steps[k < 0 ? 0 : k > 2 ? 2 : k]);
+        ImGui::Text("%s", ui_tr(r == 1 ? "Restarting..." : steps[k < 0 ? 0 : k > 2 ? 2 : k]));
         ImGui::ProgressBar(r == 1 ? 1.0f : g_df_frac.load(), ImVec2(900 * sc, 0));
         ImGui::TextDisabled("%s", t.path);
         if (r == 1) df_restart();
         else if (r == -1) g_df = DF_FAILED;
     } else {
         ImGui::TextColored(red, "%s", g_df_err);
-        ImGui::Text("Your data is still in %s", rt_data_root());
+        ImGui::Text(ui_tr("Your data is still in %s"), rt_data_root());
         ImGui::Spacing();
-        close = ImGui::Button("OK", bw) || esc;
+        close = ImGui::Button(ui_label("OK").c_str(), bw) || esc;
     }
     ImGui::PopTextWrapPos();
     ImGui::PopFont();
@@ -1323,28 +1323,28 @@ static void prelaunch_tab(float sc) {
     static double gb = -1;
     if (gb < 0) gb = rt_game_files_size(g_root.c_str()) / 1e9;
 #ifdef _WIN32
-    if (ImGui::Button("Show in Explorer")) reveal_folder(g_root);
+    if (ImGui::Button(ui_label("Show in Explorer").c_str())) reveal_folder(g_root);
 #elif defined(__linux__)
-    if (ImGui::Button("Open folder")) reveal_folder(g_root);
+    if (ImGui::Button(ui_label("Open folder").c_str())) reveal_folder(g_root);
 #else
-    if (ImGui::Button("Show in Finder")) reveal_folder(g_root);
+    if (ImGui::Button(ui_label("Show in Finder").c_str())) reveal_folder(g_root);
 #endif
     ImGui::SameLine();
     static bool shot_del = getenv("LARECOMP_LAUNCHER_SHOT") && strstr(getenv("LARECOMP_LAUNCHER_SHOT"), ":askdelete");
-    if (ImGui::Button("Delete game files") || shot_del) ImGui::OpenPopup("##delfiles"), shot_del = false;  // (test: :askdelete)
+    if (ImGui::Button(ui_label("Delete game files").c_str()) || shot_del) ImGui::OpenPopup("##delfiles"), shot_del = false;  // (test: :askdelete)
     if (ImGui::BeginPopupModal("##delfiles", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar)) {
         ImGui::PushFont(g_font_menu);
-        ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), "Are you sure?");
+        ImGui::TextColored(ImVec4(1, 0.72f, 0.4f, 1), ui_tr("Are you sure?"));
         ImGui::PopFont();
-        ImGui::Text("This deletes LAS Recomp's copy of the game files (%.1f GB).", gb);
-        ImGui::TextDisabled("Saves, seeds and settings are kept. Your own game files aren't touched.");
+        ImGui::Text(ui_tr("This deletes LAS Recomp's copy of the game files (%.1f GB)."), gb);
+        ImGui::TextDisabled(ui_tr("Saves, seeds and settings are kept. Your own game files aren't touched."));
         if (rt_dev_mode()) {  // (a source checkout: the files are the project's own extracted/)
             bool abs = !g_root.empty() && (g_root[0] == '/' || (g_root.size() > 1 && g_root[1] == ':'));
             std::string where = abs ? g_root : std::string(rt_data_root()) + "/" + g_root;
-            ImGui::TextColored(ImVec4(1, 0.5f, 0.4f, 1), "Dev checkout: this is %s", where.c_str());
+            ImGui::TextColored(ImVec4(1, 0.5f, 0.4f, 1), ui_tr("Dev checkout: this is %s"), where.c_str());
         }
         ImGui::Spacing();
-        if (ImGui::Button("Delete", ImVec2(220 * sc, 0))) {
+        if (ImGui::Button(ui_label("Delete").c_str(), ImVec2(220 * sc, 0))) {
             stop_background_prep();
             bool ok = rt_remove_game_files(g_root.c_str());  // (runtime/paths.c: only what the extraction made)
             game_files_changed();
@@ -1354,7 +1354,7 @@ static void prelaunch_tab(float sc) {
         }
         ImGui::SameLine();
         ImGui::SetItemDefaultFocus();
-        if (ImGui::Button("Cancel", ImVec2(220 * sc, 0)) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) ||
+        if (ImGui::Button(ui_label("Cancel").c_str(), ImVec2(220 * sc, 0)) || ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false) ||
             ImGui::IsKeyPressed(ImGuiKey_Escape, false))
             ImGui::CloseCurrentPopup();
         ImGui::EndPopup();
@@ -1367,7 +1367,7 @@ static void prelaunch_tab(float sc) {
     ImGui::PopTextWrapPos();
     const char *fixed = rt_data_root_fixed();
     ImGui::BeginDisabled(fixed != NULL);
-    if (ImGui::Button("Change...")) choose_data_folder();
+    if (ImGui::Button(ui_label("Change...").c_str())) choose_data_folder();
     ImGui::EndDisabled();
     if (fixed) ImGui::SameLine(), ImGui::TextDisabled("%s", fixed);
     ImGui::Spacing();
@@ -1375,22 +1375,18 @@ static void prelaunch_tab(float sc) {
     heading("Game font");
     import_fonts();
     bool fs = have_font(FONT_STD, 4), fl = have_font(FONT_LANG, 8), fe = have_font(FONT_EXT, 2);
-    ImGui::Text("Text: %s    Chinese / Korean: %s    Button icons: %s",
-                fs ? "Nintendo font (imported)" : "substitute (this OS's, per language)",
-                fl ? "Nintendo font (imported)" : "substitute", fe ? "imported" : "substitute");
+    ImGui::Text(ui_tr("Text: %s    Chinese / Korean: %s    Button icons: %s"),
+                ui_tr(fs ? "Nintendo font (imported)" : "substitute (this OS's, per language)"),
+                ui_tr(fl ? "Nintendo font (imported)" : "substitute"), ui_tr(fe ? "imported" : "substitute"));
     ImGui::PushTextWrapPos(0);
-    ImGui::TextDisabled("Fonts aren't included. For the original look, import your own copies of "
-                        "nintendo_udsg-r_std_003.bfttf (text), the same-named files for Chinese and Korean "
-                        "(nintendo_udsg-r_org_zh-cn_003, nintendo_udsg-r_ext_zh-cn_003, nintendo_udjxh-db_zh-tw_003, "
-                        "nintendo_udsg-r_ko_003) and nintendo_ext_003.bfttf (button icons). "
-                        ".ttf versions with the same names work too.");
+    ImGui::TextDisabled(ui_tr("Fonts aren't included. For the original look, import your own copies of nintendo_udsg-r_std_003.bfttf (text), the same-named files for Chinese and Korean (nintendo_udsg-r_org_zh-cn_003, nintendo_udsg-r_ext_zh-cn_003, nintendo_udjxh-db_zh-tw_003, nintendo_udsg-r_ko_003) and nintendo_ext_003.bfttf (button icons). .ttf versions with the same names work too."));
     ImGui::PopTextWrapPos();
     if (!g_font_msg.empty()) ImGui::TextWrapped("%s", g_font_msg.c_str());
     static const SDL_DialogFileFilter font_f[] = {{"Switch fonts", "bfttf;ttf"}};
-    if (ImGui::Button("Import fonts")) SDL_ShowOpenFileDialog(picked_fonts, NULL, g_launcher_win, font_f, 1, NULL, true);
+    if (ImGui::Button(ui_label("Import fonts").c_str())) SDL_ShowOpenFileDialog(picked_fonts, NULL, g_launcher_win, font_f, 1, NULL, true);
     if (fs || fl || fe) {
         ImGui::SameLine();
-        if (ImGui::Button("Use substitute font")) remove_fonts();
+        if (ImGui::Button(ui_label("Use substitute font").c_str())) remove_fonts();
     }
 }
 
@@ -1840,7 +1836,7 @@ extern "C" void launcher_run(const char *root) {
                 ImGui::PopStyleColor();
                 ImGui::PushFont(g_font_small);
                 ImGui::PushFont(g_font_menu);
-                ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "Settings");
+                ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), ui_tr("Settings"));
                 ImGui::PopFont();
                 bool back;
                 {  // close: a drawn X in the corner (B / Esc too)
@@ -1900,7 +1896,7 @@ extern "C" void launcher_run(const char *root) {
                 ImGui::PopStyleColor();
                 ImGui::PushFont(g_font_small);
                 ImGui::PushFont(g_font_menu);
-                ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), "Game Files");
+                ImGui::TextColored(ImVec4(0.93f, 0.76f, 0.33f, 1), ui_tr("Game Files"));
                 ImGui::PopFont();
                 bool back = false;
                 if (!busy) {  // close: the drawn X in the corner, as Settings (B / Esc too)
@@ -2100,7 +2096,7 @@ extern "C" void launcher_run(const char *root) {
                     ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + u * 0.35f, p.y + u * 0.8f), ImVec2(p.x + u * 0.85f, p.y + u * 0.2f), g, u * 0.12f);
                     ImGui::SetCursorPosX(x0 + u * 1.3f);
                 }
-                ImGui::TextColored(ImVec4(0.45f, 0.95f, 0.55f, 1), "Game files ready.");
+                ImGui::TextColored(ImVec4(0.45f, 0.95f, 0.55f, 1), ui_tr("Game files ready."));
                 ImGui::SetCursorPosX(x0);
                 static std::string version_label;  // (the copied files' release: "1.0.1")
                 static int label_of = -1;

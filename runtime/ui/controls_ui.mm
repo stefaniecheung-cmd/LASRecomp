@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "imgui_internal.h"  // (SetFocusID, NavCursorVisible)
 #include "option_rows.h"
 
@@ -214,7 +215,7 @@ static void configure_inputs(float scale) {
             }
         }
         g_in_right = in_right;
-        if (cd == dev) ImGui::TextDisabled("Esc cancels.");
+        if (cd == dev) ImGui::TextDisabled(ui_tr("Esc cancels."));
         else if (msg[0]) ImGui::TextDisabled("%s", msg);
     }
     opt_split_end();

@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "imgui.h"
+#include "localization.h"  // (ui_tr/ui_label: 二级界面文案)
 #include "osk.h"
 
 namespace {  // (tracker_overlay.mm has its own Node: keep both local or vector<Node> code gets merged)
@@ -64,20 +65,20 @@ bool spoiler_view_draw(const std::string &seed, float scale) {
     static std::string revealed_for;
     if (revealed_for != seed) { revealed = getenv("LARECOMP_SPOILER_TEST") != NULL; revealed_for = seed; }
     if (g_loaded != seed) load(seed);
-    if (ImGui::Button("< Back")) return false;
+    if (ImGui::Button(ui_label("< Back").c_str())) return false;
     ImGui::SameLine();
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Spoiler log - %s", seed.c_str());
+    ImGui::Text(ui_tr("Spoiler log - %s"), seed.c_str());
     ImGui::Separator();
     if (g_missing) {
-        ImGui::TextWrapped("No readable spoiler for this seed yet. Generate it with: tools/rando/spoiler_view.py rando/%s",
+        ImGui::TextWrapped(ui_tr("No readable spoiler for this seed yet. Generate it with: tools/rando/spoiler_view.py rando/%s"),
                            seed.c_str());
         return true;
     }
     if (!revealed) {
         ImGui::Spacing();
-        ImGui::TextWrapped("This shows where every item is, plus a step-by-step route to beat the seed.");
-        if (ImGui::Button("Reveal spoilers", ImVec2(320 * scale, 0))) revealed = true;
+        ImGui::TextWrapped(ui_tr("This shows where every item is, plus a step-by-step route to beat the seed."));
+        if (ImGui::Button(ui_label("Reveal spoilers").c_str(), ImVec2(320 * scale, 0))) revealed = true;
         return true;
     }
     static char q[64];
