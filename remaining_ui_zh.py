@@ -26,6 +26,12 @@ TRANS = {
     "one-way": "单向",
     "leads to A": "通往 A",
     "No matches.": "没有匹配的结果。",
+    "Room %c%d": "房间 %c%d",
+    "Small keys %d / %d": "小钥匙 %d / %d",
+    "All: %d in logic, %d/%d": "全部：%d 个在逻辑内，%d/%d",
+    "%s: %d in logic": "%s：%d 个在逻辑内",
+    ", %d trick": "，%d 个技巧",
+    ", %d need an item": "，%d 个需要道具",
     "SEED HASH": "种子哈希",
     # ---- 提示行
     "Load a save file and get into the game to use cheats.": "读取存档并进入游戏后即可使用作弊功能。",

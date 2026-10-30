@@ -1210,7 +1210,7 @@ static std::string room_label(const Check &c) {  // "Room B5" (column letter, ro
     if (c.dcell.size() != 3) return "";
     int row = (c.dcell[0] - '0') * 10 + (c.dcell[1] - '0');
     char b[24];
-    snprintf(b, sizeof b, "Room %c%d", c.dcell[2], row);
+    snprintf(b, sizeof b, ui_tr("Room %c%d"), c.dcell[2], row);
     return b;
 }
 // Draws the list; returns the check of a row clicked (-1: none). *close: clicked outside / right click.
@@ -1325,7 +1325,7 @@ static std::vector<std::string> dungeon_pills(const std::string &dk) {
     for (auto &n : g_nodes)
         for (int32_t o : n.cond) if (o >= 0 && (o & 0xFFFFF) == key) most = std::max(most, o >> 20);
     char b[64];
-    if (most) snprintf(b, sizeof b, "Small keys %d / %d", held, most), p.push_back(b);
+    if (most) snprintf(b, sizeof b, ui_tr("Small keys %d / %d"), held, most), p.push_back(b);
     p.push_back((LD8(r + 1) >> 3) & 1 ? "Nightmare Key: found" : "Nightmare Key: not found");
     int s = souls_owned(d);
     if (s >= 0) p.push_back(s ? "Boss soul: found" : "Boss soul: needed");
@@ -1653,7 +1653,7 @@ extern "C" void tracker_overlay_draw(ImVec2 display, ImFont *font) {
         if (n_sel[ST_NEEDS] && k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ", %d need an item", n_sel[ST_NEEDS]);
         if (k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ", %d/%d     ", n_sel[ST_DONE], n_sel_all);
     }
-    if (k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, "All: %d in logic, %d/%d", run_logic, run_done, run_all);
+    if (k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ui_tr("All: %d in logic, %d/%d"), run_logic, run_done, run_all);
     if (tri && k < (int)sizeof info) snprintf(info + k, sizeof info - k, ", Triforce %d/%d", tri_have, tri_need);
     float x0 = ox + 64 * u, room = px - pw - x0 - 24 * u;
     (void)room;
@@ -1920,9 +1920,9 @@ extern "C" void tracker_dungeon_draw(ImVec2 display, ImFont *font) {
             for (int i : by_room[rbs[cur].cell]) n[g_status[i]]++;
             Check tmp;
             tmp.dcell = rbs[cur].cell;
-            int k = snprintf(info, sizeof info, "%s: %d in logic", room_label(tmp).c_str(), n[ST_LOGIC]);
-            if (n[ST_TRICK] && k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ", %d trick", n[ST_TRICK]);
-            if (n[ST_NEEDS] && k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ", %d need an item", n[ST_NEEDS]);
+            int k = snprintf(info, sizeof info, ui_tr("%s: %d in logic"), room_label(tmp).c_str(), n[ST_LOGIC]);
+            if (n[ST_TRICK] && k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ui_tr(", %d trick"), n[ST_TRICK]);
+            if (n[ST_NEEDS] && k < (int)sizeof info) k += snprintf(info + k, sizeof info - k, ui_tr(", %d need an item"), n[ST_NEEDS]);
         }
         dl->PushClipRect(ImVec2(ox + 64 * u, y - 4 * u), ImVec2(ox + 1226 * u - pw - 16 * u, y + 40 * u), true);
         shadow_text(dl, font, pfs * 0.92f, ImVec2(ox + 64 * u, y + pfs * 0.04f), info, u);
