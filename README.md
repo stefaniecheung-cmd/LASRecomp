@@ -46,13 +46,7 @@ Beta 5.3 给 release 构建加了 `--strip-debug`，所以 exe 从 16.3 MB 缩�
 
 ## 下载与安装
 
-到 [Releases](https://github.com/xinghee/LASRecomp/releases) 下载 `lasrecomp-zh-*.zip`（约 1.6 MB，内含 4 MB 的 exe）。
-
-```
-1. 解压，得到 lasrecomp.exe
-2. 用它覆盖程序目录里同名的 lasrecomp.exe
-3. 启动，进游戏，按 F1
-```
+到 [Releases](https://github.com/xinghee/LASRecomp/releases) 下载 
 
 **不要删**程序目录里的这些：
 
