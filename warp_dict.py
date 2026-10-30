@@ -41,7 +41,7 @@ PLACES = {
     "the bay": "玛莎湾",
     # —— 建筑 / 设施 ——
     "Town Tool Shop": "城镇工具店",
-    "Trendy Game": "时尚抓娃娃",
+    "Trendy Game": "时髦抓娃娃",
     "Library": "图书馆",
     "Dream Shrine": "梦之神殿",
     "Rapids Ride": "漂流竞速",
