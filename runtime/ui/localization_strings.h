@@ -501,6 +501,10 @@ UI_TEXT("too long for a seed ID", "种子 ID 太长", "种子 ID 太长")
 UI_TEXT("typo? (checksum doesn't match)", "输入有误？（校验和不匹配）", "输入有误？（校验和不匹配）")
 
 // ---- 以下为补充翻译（右栏说明、传送点、道具名、追踪器、开始界面），由社区补全 ----
+UI_TEXT("%d %s", "%d 个%s", "%d 個%s")
+UI_TEXT("%d small keys", "%d 把小钥匙", "%d 把小鑰匙")
+UI_TEXT("%s (level 2)", "%s（二级）", "%s（二級）")
+UI_TEXT("%s's soul", "%s之魂", "%s之魂")
 UI_TEXT("A Manbo's Mambo arrival point: can't be warped to directly.", "曼波曼波曲的到达点：无法直接传送。", "曼波曼波曲的到達點：無法直接傳送。")
 UI_TEXT("A filter over the whole picture, the HUD included.", "覆盖整个画面（包括界面）的滤镜。", "覆蓋整個畫面（包括介面）的濾鏡。")
 UI_TEXT("A run timer in the corner: real time from the start of gameplay to the ending.", "在角落显示计时器：从开始游玩到结局的真实时间。", "在角落顯示計時器：從開始遊玩到結局的真實時間。")
@@ -1017,5 +1021,6 @@ UI_TEXT("You can steal from the shop before you have the sword.", "在拿到剑�
 UI_TEXT("You must find your bomb bag to collect and carry bombs.", "必须找到炸弹袋才能拾取和携带炸弹。", "必須找到炸彈袋才能拾取和攜帶炸彈。")
 UI_TEXT("You must find your powder bag to collect and carry Magic Powder.", "必须找到魔法粉袋才能拾取和携带魔法粉。", "必須找到魔法粉袋才能拾取和攜帶魔法粉。")
 UI_TEXT("Your copy of the game", "你的游戏文件", "你的遊戲檔案")
+UI_TEXT("a small key", "一把小钥匙", "一把小鑰匙")
 UI_TEXT("an unsupported version", "不支持的版本", "不支援的版本")
 UI_TEXT("out of logic", "逻辑外", "邏輯外")

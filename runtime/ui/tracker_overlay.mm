@@ -583,20 +583,26 @@ static std::string item_name(int id, int cnt) {
     std::string s;
     for (auto &x : names) if (t == x.tok) s = ui_tr(x.name);
     // (in-game wording: the list already names the dungeon; a soul by its owner, "Moldorm's soul")
-    if (s.empty() && !t.compare(0, 4, "key-")) return cnt > 1 ? std::to_string(cnt) + " small keys" : "a small key";
-    else if (s.empty() && !t.compare(0, 14, "nightmare-key-")) return "Nightmare Key";
+    char buf[256];
+    if (s.empty() && !t.compare(0, 4, "key-")) {
+        if (cnt > 1) { snprintf(buf, sizeof buf, ui_tr("%d small keys"), cnt); return buf; }
+        return ui_tr("a small key");
+    }
+    else if (s.empty() && !t.compare(0, 14, "nightmare-key-")) return ui_tr("Nightmare Key");
     else if (s.empty() && !t.compare(0, 5, "soul-")) {
         std::string n = t.substr(5);
         for (size_t i = 0; i < n.size(); i++) {
             if (n[i] == '-') n[i] = ' ';
             if (i == 0 || n[i - 1] == ' ') n[i] = (char)toupper(n[i]);
         }
-        return n + "'s soul";
+        snprintf(buf, sizeof buf, ui_tr("%s's soul"), n.c_str());
+        return buf;
     } else if (s.empty()) s = pretty(t);
     if (cnt > 1) {
-        if (t == "sword" || t == "bracelet") return s + " L2";
-        if (t == "shield") return "Mirror Shield";
-        return std::to_string(cnt) + " " + s;  // (5 Seashells, 3 D4 Small Keys)
+        if (t == "sword" || t == "bracelet") { snprintf(buf, sizeof buf, ui_tr("%s (level 2)"), s.c_str()); return buf; }
+        if (t == "shield") return ui_tr("Mirror Shield");
+        snprintf(buf, sizeof buf, ui_tr("%d %s"), cnt, s.c_str());  // (5 Seashells, 3 D4 Small Keys)
+        return buf;
     }
     return s;
 }
