@@ -11,7 +11,7 @@ name: zh build (Windows exe)
 
 on:
   push:
-    branches: [zh]
+    branches: [zh-cn]
     paths:
       - 'runtime/ui/**'
       - '.github/workflows/zh-build.yml'

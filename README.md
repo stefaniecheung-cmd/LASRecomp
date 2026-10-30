@@ -1,6 +1,6 @@
 # LAS Recomp Beta 5.4 — 中文界面版
 
-> 个人自用的 **Windows** 构建：官方 Beta 5.4 加中文界面。
+> **Windows / Linux** 构建：官方 Beta 5.4 加中文界面。
 > 不含任何游戏文件、密钥或转储工具——那些需要你自己的正版备份。
 
 这个仓库是 [peiikai/LASRecomp](https://github.com/peiikai/LASRecomp) 的 fork，只做了一件事：
@@ -91,11 +91,14 @@ F1 → 操作 (Inputs) → 语言 (Language) → 中文（简体）
 
 | | 内容 |
 |---|---|
-| ✅ | F1 菜单的全部页签、选项名、选项值（**495 条**） |
+| ✅ | F1 菜单的全部页签、选项名、选项值（**495 条**，上游自带） |
+| ✅ | 右栏的详细说明文字（包括多行拼接的段落） |
 | ✅ | 开始界面的 Settings 页 |
-| ✅ | 随机化选项、道具名、地名、乐器曲名、作弊项、传送点 |
-| ❌ | 右栏的详细说明文字（仍是英文——那些是多行拼接的字符串，需要单独处理） |
+| ✅ | 随机化选项、道具名、地名、乐器曲名、作弊项、传送点、追踪器 |
+| ✅ | 二级界面：软键盘、剧透日志、存档编辑、作弊页、按键设置、弹窗 |
 | — | 游戏内文本（对话框、道具说明、剧情）**不在此范围**：它们来自 romfs，本来就跟着游戏语言走 |
+
+合计 **1049 条**（上游 495 + 本分支补充 554），全部同时提供简体与繁体。
 
 品牌名和实体按键名保留英文：`Nintendo` / `PlayStation` / `Xbox` / `Minus + Plus` / `View + Menu` / `Create + Options`。
 
@@ -122,7 +125,7 @@ extracted\
 
 本仓库只改 `runtime/ui\`，所以不需要上游那套"四平台 + 打包辅助工具"的流水线。
 
-推送到 `zh` 分支会自动跑 [`.github/workflows/zh-build.yml`](.github/workflows/zh-build.yml)：
+推送到 `zh-cn` 分支会自动跑 [`.github/workflows/zh-build.yml`](.github/workflows/zh-build.yml)：
 
 ```
 checkout → MSYS2 (UCRT64) → make deps-windows（有缓存）
@@ -142,6 +145,25 @@ checkout → MSYS2 (UCRT64) → make deps-windows（有缓存）
 ```bash
 make -j"$(nproc)" B=build/win-release DEPS="$(pwd)/build/deps-win" RELEASE=1 build/win-release/lasrecomp.exe
 ```
+
+---
+
+## 维护这个分支
+
+译文全部放在 [`zh_table.py`](zh_table.py)（英文原文 → 简体/繁体），由它生成
+`runtime/ui/localization_strings.h` 里的「补充翻译」区块：
+
+```bash
+python gen_strings.py          # 改了 zh_table.py 之后重新生成
+python gen_strings.py --check  # 只比对，不写盘
+python scripts/check_zh.py     # 结构自检：重复键、占位符、换行转义、繁体漏转
+```
+
+上游发新版后按 [`docs/MAINTAINING-zh.md`](docs/MAINTAINING-zh.md) 合并：
+`git remote add upstream … && git fetch upstream && git merge upstream/beta_5`，
+冲突集中在 `localization_strings.h`（整段交给生成器）和 `runtime/ui/*.mm`（保留 `ui_tr` 调用）。
+
+那份文档里还有构建/发版的完整步骤、术语表和踩过的坑，改文案之前建议先看一眼。
 
 ---
 
