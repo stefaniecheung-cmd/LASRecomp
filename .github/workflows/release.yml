@@ -378,7 +378,8 @@ jobs:
   # repository's secrets ANDROID_KEYSTORE_B64 / ANDROID_KEYSTORE_PASSWORD: it installs over an experimental build)
   android:
     needs: check
-    if: needs.check.outputs.skip != 'true'
+    # (只在主仓构建：签 apk 要 ANDROID_KEYSTORE_* secrets，fork 上没有，会让后面的 release job 一起挂掉)
+    if: needs.check.outputs.skip != 'true' && github.repository == 'peiikai/LASRecomp'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -452,7 +453,8 @@ jobs:
           gh release edit "$TAG" --notes-file new.md
 
   release:
-    needs: [check, macos, windows, linux, android, ios]
+    # android 只在主仓跑（见上），所以它不能出现在 needs 里，否则 fork 上这个 job 会被 skip
+    needs: [check, macos, windows, linux, ios]
     if: needs.check.outputs.skip != 'true'
     runs-on: ubuntu-24.04
     permissions:
@@ -473,7 +475,9 @@ jobs:
         run: |
           cd dist
           ls -la
-          [ "$(ls | wc -l)" = 6 ] || { echo "::error::expected 6 files"; exit 1; }
+          [ "$(ls | wc -l)" -ge 1 ] || { echo "::error::no build files"; exit 1; }
+          # (fork 上 android 不跑，所以不再是固定的 6 个文件；只要求 Linux x86_64 这个必备产物在)
+          ls | grep -q -- '-linux-x86_64.AppImage$' || { echo "::error::missing the Linux x86_64 AppImage"; exit 1; }
           # (a test build: only the platforms its fix targets ship; the others were built as a compile check)
           for f in *; do
             case $f in *-macOS.dmg) p=macos ;; *-windows.zip) p=windows ;; *-linux-x86_64.AppImage) p=linux ;;
