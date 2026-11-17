@@ -96,7 +96,9 @@ jobs:
           echo "$TAG: $SHA, LARECOMP_VERSION $VERSION"
 
   macos:
-    needs: check
+    # (serial after ios: this account gets one macOS runner slot at a time; queued in parallel one of the
+    #  two jobs repeatedly times out waiting to be acquired)
+    needs: [check, ios]
     if: needs.check.outputs.skip != 'true'
     # (a fresh Tart VM per job on the maintainer's Mac, deleted after; macOS 15. Forks have none: GitHub's macOS 15)
     runs-on: ${{ github.repository == 'peiikai/LASRecomp' && fromJSON('["self-hosted", "macos-vm"]') || 'macos-15' }}
