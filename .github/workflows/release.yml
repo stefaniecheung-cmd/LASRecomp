@@ -456,7 +456,8 @@ jobs:
 
   release:
     # android 只在主仓跑（见上），所以它不能出现在 needs 里，否则 fork 上这个 job 会被 skip
-    needs: [check, macos, windows, linux, ios]
+    # macos/ios 也不进 needs：GitHub 托管 macOS runner 容量紧张，排队超时被取消时不应拖住 release
+    needs: [check, windows, linux]
     if: needs.check.outputs.skip != 'true'
     runs-on: ubuntu-24.04
     permissions:
